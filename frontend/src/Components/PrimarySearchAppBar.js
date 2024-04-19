@@ -13,7 +13,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from "@mui/icons-material/Logout";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Button } from "@mui/material";
 
@@ -54,6 +54,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     [theme.breakpoints.up("md")]: {
       width: "20ch",
     },
+   
   },
 }));
 
@@ -146,11 +147,14 @@ export default function PrimarySearchAppBar() {
     </Menu>
   );
 
+  const StyledToolBar = styled(Toolbar)({
+    display: "flex",
+    justifyContent: "space-between",
+  });
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          
+      <AppBar position="stick">
+        <StyledToolBar>
           <Typography
             variant="h6"
             noWrap
@@ -190,9 +194,15 @@ export default function PrimarySearchAppBar() {
             >
               <AccountCircle />
             </IconButton>
-           <Button startIcon={<LogoutIcon/>} variant="contained" color="warning" size="small" sx={{marginLeft:3}}>
-            Logout
-           </Button>
+            <Button
+              startIcon={<LogoutIcon />}
+              variant="contained"
+              color="warning"
+              size="small"
+              sx={{ marginLeft: 3 }}
+            >
+              Logout
+            </Button>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -206,7 +216,7 @@ export default function PrimarySearchAppBar() {
               <MoreIcon />
             </IconButton>
           </Box>
-        </Toolbar>
+        </StyledToolBar>
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
