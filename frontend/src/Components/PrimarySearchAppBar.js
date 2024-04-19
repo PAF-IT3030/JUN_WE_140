@@ -12,8 +12,8 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import LogoutIcon from '@mui/icons-material/Logout';
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Button } from "@mui/material";
 
@@ -150,15 +150,7 @@ export default function PrimarySearchAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
+          
           <Typography
             variant="h6"
             noWrap
@@ -183,7 +175,7 @@ export default function PrimarySearchAppBar() {
               aria-label="show 17 new notifications"
               color="inherit"
             >
-              <Badge badgeContent={17} color="error">
+              <Badge badgeContent={10} color="error">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
@@ -198,7 +190,7 @@ export default function PrimarySearchAppBar() {
             >
               <AccountCircle />
             </IconButton>
-           <Button variant="contained" color="warning" size="small" sx={{marginLeft:3}}>
+           <Button startIcon={<LogoutIcon/>} variant="contained" color="warning" size="small" sx={{marginLeft:3}}>
             Logout
            </Button>
           </Box>

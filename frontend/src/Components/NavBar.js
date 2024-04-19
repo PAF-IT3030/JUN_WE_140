@@ -1,5 +1,6 @@
 import {AppBar, IconButton, Toolbar, Typography} from '@mui/material'
 import logo from '../Images/logo.jpg'
+
 function NavBar() {
   return (
     <AppBar position='static'>
