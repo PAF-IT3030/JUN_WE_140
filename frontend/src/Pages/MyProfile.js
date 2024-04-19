@@ -78,8 +78,11 @@ class MyProfile extends React.Component {
                 <div className="col-md-7 mb-3 container d-flex justify-content-center align-items-center">
                     <img src={Avatar_png} className="img-fluid rounded-start" style={{width: "10rem"}} alt="Login" />
                 </div>
-                
-                <h2 >User Profile</h2><br/>
+
+                <div className="col-md-7 mb-3 container d-flex justify-content-center align-items-center">
+                <h2>User Profile</h2><br/>
+                </div>
+
                 <div className="row justify-content-center align-items-center">
                     <div className="col-md-5">
                         <label htmlFor="firstNameInput">First Name</label>
@@ -121,7 +124,7 @@ class MyProfile extends React.Component {
                         <input type="text" className="form-control col-md-10" /*value={lastname} id="LastNameInput" onChange={e => setLastName(e.target.value)}*/ placeholder="Height" /><br/>
                     </div>
                 </div>
-                <div className="row mt-3">
+                <div className="col-md-7 mb-3 container d-flex justify-content-center align-items-center">
                     <div className="col-md-7">
                         <button className="btn btn-primary" /*onClick={updateProfileDetails}*/>Update</button>
                     </div>
@@ -139,7 +142,7 @@ class MyProfile extends React.Component {
                 aria-labelledby="v-pills-settings-tab"
               >
 
-                <h3>Change Password</h3><br/>
+                <h3 className="col-md-7 mb-3 container d-flex justify-content-center align-items-center">Change Password</h3><br/>
                 <div className="row justify-content-center align-items-center">
                     <div className="col-md-7">
                         <label htmlFor="firstNameInput">Enter New Password</label>
@@ -151,16 +154,19 @@ class MyProfile extends React.Component {
                         <input type="text" className="form-control col-md-10" /*value={lastname} id="LastNameInput" onChange={e => setLastName(e.target.value)}*/ placeholder="Confirm New Password" /><br/>
                     </div>
                 </div>  
-                <div class="mb-4">
+                <div className="col-md-7 mb-3 container d-flex justify-content-center align-items-center">
                 <button type="submit" class="btn btn-primary" /*onClick={resetSubmit}*/>Submit</button>
                 </div><br/>
     
                 {/*<div >
                 <a href="/profile" class="btn btn-danger" /*onClick={cancel}>Cancel</a>
-    </div> */} 
+                </div> */} 
+               <div className="col-md-7 mb-3 container d-flex justify-content-center align-items-center">
                 <h3>Notification Preferences</h3><br/>
+                </div>
                 
-                <label>
+                
+                <label className="col-md-7 mb-3 container d-flex justify-content-center align-items-center">
                 <p>Turn Notifications On/Off</p>
                     <input type="checkbox"/>
                 </label>

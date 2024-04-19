@@ -1,7 +1,7 @@
 import './App.css';
 import HomePage from './Pages/HomePage';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ProfilePage from './Pages/ProfilePage';
+import MyProfile from './Pages/MyProfile';
 import LoginPage from './Pages/LoginPage';
 
 
@@ -17,8 +17,8 @@ function App() {
               element={ <HomePage /> }
             />
             <Route
-              path="/profile"
-              element={ <ProfilePage />}
+              path="/MyProfile"
+              element={ <MyProfile />}
             />
           </Routes>
         
