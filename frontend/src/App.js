@@ -7,12 +7,12 @@ import MyProfile from "./Pages/MyProfile";
 function App() {
   return (
     <>
-      {/*<Router>
+      <Router>
             <Routes>
               <Route path='/' element={<MyProfile />} />
               
             </Routes>
-          </Router>*/}
+          </Router>
     </>
   );
 }
