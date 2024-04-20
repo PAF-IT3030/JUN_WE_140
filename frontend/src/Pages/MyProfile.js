@@ -166,7 +166,7 @@ class MyProfile extends React.Component {
                 </div>
                 
                 
-                <label className="col-md-7 mb-3 container d-flex justify-content-center align-items-center">
+                <label className="col-md-7 mb-3 mt-5 container d-flex justify-content-center align-items-center">
                 <p>Turn Notifications On/Off</p>
                     <input type="checkbox"/>
                 </label>
