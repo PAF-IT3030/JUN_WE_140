@@ -16,6 +16,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import LogoutIcon from '@mui/icons-material/Logout';
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Button } from "@mui/material";
+import { Link } from 'react-router-dom';
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -179,17 +180,20 @@ export default function PrimarySearchAppBar() {
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+           
+            <div>
+              <Link to="/myprofile" style={{ textDecoration: 'none', color: 'inherit' }}>
+                <IconButton
+                  size="large"
+                  edge="end"
+                  aria-label="account of current user"
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+              </Link>
+            </div>
+            
            <Button startIcon={<LogoutIcon/>} variant="contained" color="warning" size="small" sx={{marginLeft:3}}>
             Logout
            </Button>
