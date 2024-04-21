@@ -15,9 +15,10 @@ import {
     ListItemButton,
     ListItemIcon,
     ListItemText,
-    Switch,
+    SetMeal,
   } from "@mui/material";
-  import React from "react";
+  import SetMealIcon from '@mui/icons-material/SetMeal';
+  import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
   
   const Sidebar = ({mode,setMode}) => {
     return (
@@ -35,25 +36,18 @@ import {
             <ListItem disablePadding>
               <ListItemButton component="a" href="#simple-list">
                 <ListItemIcon>
-                  <Article />
+                  <SetMealIcon />
                 </ListItemIcon>
-                <ListItemText primary="Pages" />
+                <ListItemText primary="Meal Plans" />
               </ListItemButton>
             </ListItem>
+            
             <ListItem disablePadding>
               <ListItemButton component="a" href="#simple-list">
                 <ListItemIcon>
-                  <Group />
+                  <FitnessCenterIcon />
                 </ListItemIcon>
-                <ListItemText primary="Groups" />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton component="a" href="#simple-list">
-                <ListItemIcon>
-                  <Storefront />
-                </ListItemIcon>
-                <ListItemText primary="Marketplace" />
+                <ListItemText primary="Workout Plans" />
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
@@ -61,33 +55,26 @@ import {
                 <ListItemIcon>
                   <Person />
                 </ListItemIcon>
-                <ListItemText primary="Friends" />
+                <ListItemText primary="Followers" />
               </ListItemButton>
             </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton component="a" href="#simple-list">
-                <ListItemIcon>
-                  <Settings />
-                </ListItemIcon>
-                <ListItemText primary="Settings" />
-              </ListItemButton>
-            </ListItem>
+            
             <ListItem disablePadding>
               <ListItemButton component="a" href="#simple-list">
                 <ListItemIcon>
                   <AccountBox />
                 </ListItemIcon>
-                <ListItemText primary="Profile" />
+                <ListItemText primary="My Account" />
               </ListItemButton>
             </ListItem>
-            <ListItem disablePadding>
+            {/* <ListItem disablePadding>
               <ListItemButton component="a" href="#simple-list">
                 <ListItemIcon>
                   <ModeNight />
                 </ListItemIcon>
                 <Switch onChange={e=>setMode(mode === "light" ? "dark" : "light")}/>
               </ListItemButton>
-            </ListItem>
+            </ListItem> */}
           </List>
         </Box>
       </Box>
