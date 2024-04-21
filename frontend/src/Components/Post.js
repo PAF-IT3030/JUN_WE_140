@@ -71,7 +71,7 @@ const Post = () => {
   ];
 
   const [post, setPost] = useState(dummyData);
-console.log(post)
+
   return post.map((d) => (
     <Card sx={{ margin: 5 }}>
       <CardHeader
