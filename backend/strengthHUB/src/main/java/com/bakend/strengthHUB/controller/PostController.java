@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "api/post/")
@@ -24,6 +25,11 @@ public class PostController {
     @PostMapping("/")
     public PostDto createPost(@RequestBody PostDto postDto) {
         return postService.createPost(postDto);
+    }
+
+    @GetMapping("/{id}")
+    public Optional<Post> getPostById(@PathVariable Integer id) {
+        return postService.getPostById(id);
     }
 
 
