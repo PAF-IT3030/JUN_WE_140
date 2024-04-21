@@ -29,7 +29,12 @@ public class PostController {
 
     @GetMapping("/{id}")
     public Optional<Post> getPostById(@PathVariable Integer id) {
-        return postService.getPostById(id);
+        if (postService.getPostById(id).isPresent()) {
+            return postService.getPostById(id);
+        }else {
+            return Optional.empty();
+        }
+
     }
 
 
