@@ -1,10 +1,10 @@
-package com.backend.strengthhub;
+package com.bakend.strengthHUB;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class StrengthhubApplicationTests {
+class StrengthHubApplicationTests {
 
 	@Test
 	void contextLoads() {
