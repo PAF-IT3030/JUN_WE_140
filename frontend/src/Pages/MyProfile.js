@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import '../css/MyProfile.css';
-import Avatar_png from '../images/Avatar.png'
+// import Avatar_png from '../images/Avatar.png'
 
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 
@@ -76,7 +76,7 @@ class MyProfile extends React.Component {
                 aria-labelledby="v-pills-profile-tab"
               >
                 <div className="col-md-7 mb-3 container d-flex justify-content-center align-items-center">
-                    <img src={Avatar_png} className="img-fluid rounded-start" style={{width: "10rem"}} alt="Login" />
+                    {/* <img src={} className="img-fluid rounded-start" style={{width: "10rem"}} alt="Login" /> */}
                 </div>
 
                 <div className="col-md-7 mb-3 container d-flex justify-content-center align-items-center">
