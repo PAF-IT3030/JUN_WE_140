@@ -8,8 +8,6 @@ import RightSideBar from "../Components/RightSideBar";
 function HomePage() {
   return (
     <>
-      {/* <NavBar/> */}
-      <PrimarySearchAppBar />
       <Box>
         <Stack direction="row" justifyContent="space-between">
           <SideBar/>
