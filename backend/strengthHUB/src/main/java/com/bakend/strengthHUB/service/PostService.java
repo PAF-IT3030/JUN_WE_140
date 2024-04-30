@@ -1,41 +1,14 @@
-package com.bakend.strengthHUB.service;
+package com.bakend.strengthHUB.service.PostService;
 
-import com.bakend.strengthHUB.dto.PostDto;
+import com.bakend.strengthHUB.dto.PostDTO;
 import com.bakend.strengthHUB.entity.Post;
-import com.bakend.strengthHUB.repo.PostRepository;
-import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.Optional;
+import java.io.IOException;
 
-@Service
-@Transactional
-
-public class PostService {
-
-    @Autowired
-    private PostRepository postRepository;
-
-    public List<Post> getAllPosts() {
-        return postRepository.findAll();
-    }
-
-    public PostDto createPost(PostDto postDto) {
-        Post post = new Post();
-
-        post.setUserId(postDto.getUserId());
-        post.setDescription(postDto.getDescription());
-        post.setDate(postDto.getDate());
-        post.setImage(postDto.getImage());
-
-        postRepository.save(post);
-        return postDto;
-    }
-
-    public Optional<Post> getPostById(Integer id) {
-        return postRepository.findById(id);
-    }
+public interface PostService {
+    String uploadImage(MultipartFile file) throws IOException;
+    String uploadVideo(MultipartFile file) throws IOException;
+    Post createPost(PostDTO postDTO);
+    PostDTO getPostById(Long postId);
 }
-
