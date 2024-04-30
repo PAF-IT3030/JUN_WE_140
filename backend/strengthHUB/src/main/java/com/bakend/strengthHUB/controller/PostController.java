@@ -1,13 +1,14 @@
 package com.bakend.strengthHUB.controller;
 
-import com.bakend.strengthHUB.dto.PostDto;
+import com.bakend.strengthHUB.dto.PostDTO;
 import com.bakend.strengthHUB.entity.Post;
 import com.bakend.strengthHUB.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.Optional;
+import java.io.IOException;
+
 
 @RestController
 @RequestMapping(value = "api/post/")
@@ -18,23 +19,24 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    @GetMapping("/")
-    public List<Post> getAllPosts() {
-        return postService.getAllPosts();
-    }
+//    @PostMapping("/post")
+//    public String uploadImage(@RequestParam("file") MultipartFile file) throws  IOException {
+//        return postService.uploadImage(file);
+//    }
+//
+//    @PostMapping("/video")
+//    public String uploadVideo(@RequestParam("file") MultipartFile file) throws IOException {
+//        return postService.uploadVideo(file);
+//    }
+
     @PostMapping("/")
-    public PostDto createPost(@RequestBody PostDto postDto) {
-        return postService.createPost(postDto);
+    public Post createPost(@RequestBody PostDTO postDTO) {
+        return postService.createPost(postDTO);
     }
 
-    @GetMapping("/{id}")
-    public Optional<Post> getPostById(@PathVariable Integer id) {
-        if (postService.getPostById(id).isPresent()) {
-            return postService.getPostById(id);
-        }else {
-            return Optional.empty();
-        }
-
+    @GetMapping("/{postId}")
+    public PostDTO getPostById(@PathVariable Long postId) {
+        return postService.getPostById(postId);
     }
 
 
