@@ -25,8 +25,7 @@ public class PostController {
 
     @Autowired
     private PostService postService;
-
-
+    
     @PostMapping("/")
     public ResponseEntity<Post> createPost(@RequestParam("title") String title,
                                            @RequestParam("description") String description,
@@ -42,6 +41,10 @@ public class PostController {
         }
     }
 
-
+    @GetMapping("/")
+    public ResponseEntity<List<Post>> getAllPosts() {
+        List<Post> posts = postService.getAllPosts();
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
 
 }

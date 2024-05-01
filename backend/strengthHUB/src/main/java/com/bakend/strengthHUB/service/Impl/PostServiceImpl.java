@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -24,6 +25,7 @@ public class PostServiceImpl implements PostService {
 
     @Value("${file.upload.directory}")
     private String uploadDirectory;
+
     @Override
     public Post createPost(String title, String description, MultipartFile file) {
         try {
@@ -49,5 +51,12 @@ public class PostServiceImpl implements PostService {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public List<Post> getAllPosts() {
+
+        return postRepository.findAll();
+
     }
 }
