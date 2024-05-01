@@ -16,6 +16,7 @@ public class PostDTO {
 
 //    private String userId;
     private  Long postId;
+    private String userId;
     private String title;
     private String description;
     private String filePath;

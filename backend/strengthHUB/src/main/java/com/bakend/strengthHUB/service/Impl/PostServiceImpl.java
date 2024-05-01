@@ -72,10 +72,10 @@ public class PostServiceImpl implements PostService {
                     if (fileResponse.getStatusCode() == HttpStatus.OK) {
                         // Convert byte array to Base64 string
                         String fileData = Base64.getEncoder().encodeToString(fileResponse.getBody());
-                        return new PostDTO(post.getPostId(), post.getTitle(), post.getDescription(), fileData, post.getCreatedAt());
+                        return new PostDTO(post.getPostId(),post.getUserId(), post.getTitle(), post.getDescription(), fileData, post.getCreatedAt());
                     } else {
                         // Handle error case
-                        return new PostDTO(post.getPostId(), post.getTitle(), post.getDescription(), null, post.getCreatedAt());
+                        return new PostDTO(post.getPostId(),post.getUserId(), post.getTitle(), post.getDescription(), null, post.getCreatedAt());
                     }
                 })
                 .collect(Collectors.toList());

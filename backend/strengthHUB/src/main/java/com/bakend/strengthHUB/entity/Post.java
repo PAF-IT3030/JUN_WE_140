@@ -18,6 +18,7 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
+    private String userId;
     private String title;
     private String description;
     private String filePath;
