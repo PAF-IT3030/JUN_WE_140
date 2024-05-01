@@ -24,6 +24,7 @@ import {
 import workoutImg from "../Images/workout.jpg";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { format } from 'date-fns';
 
 const Post = () => {
   const initialPost = {
@@ -192,7 +193,18 @@ const Post = () => {
   const [post, setPost] = useState(dummyData);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedComment, setSelectedComment] = useState(null);
-  const [posts, setPosts] = useState();
+  const [posts, setPosts] = useState(null);
+    //retrive posts
+    useEffect(() => {
+      axios
+        .get("http://localhost:8080/api/post/")
+        .then((response) => {
+          setPosts(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching posts:", error);
+        });
+    }, []);
 
   const handleOpenDialog = (comment) => {
     setSelectedComment(comment);
@@ -206,29 +218,17 @@ const Post = () => {
 
   const [newComment, setNewComment] = useState("");
 
-  //retrive posts
-  useEffect(() => {
-    axios
-      .get("http://localhost:8080/api/post/")
-      .then((response) => {
-        setPosts(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching posts:", error);
-      });
-  }, []);
+
   console.log(posts, "posts");
 
   const handleCommentSubmit = (postId) => {
-    // Logic to submit the new comment
-    // You can use the postId to identify which post the comment belongs to
+   
     console.log("post :", postId);
-    // Reset the input field after submission
-    // setNewComment("");
+    
   };
 
-  return posts.map((d) => (
-    <Card key={d.id} sx={{ margin: 5 }}>
+  return posts?.map((d) => (
+    <Card key={d.postId} sx={{ margin: 5 }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
@@ -241,7 +241,7 @@ const Post = () => {
           </IconButton>
         }
         // title={d.name}
-        subheader={d.createdAt}
+        subheader={format(new Date(d.createdAt), 'MMMM dd, yyyy HH:mm')}
       />
       <Typography variant="h6" fontFamily="Paella dish" sx={{ p: 2 }}>
         {d.title}
