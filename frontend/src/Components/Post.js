@@ -1,19 +1,49 @@
 import { Favorite, FavoriteBorder, MoreVert, Share } from "@mui/icons-material";
+import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Avatar,
+  Box,
+  Button,
   Card,
   CardActions,
   CardContent,
   CardHeader,
   CardMedia,
   Checkbox,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   IconButton,
+  TextField,
   Typography,
 } from "@mui/material";
 import workoutImg from "../Images/workout.jpg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { format } from 'date-fns';
 
 const Post = () => {
+  const initialPost = {
+    postId: 0,
+    userId: "",
+    name: "",
+    date: "",
+    description: "",
+    image: "",
+    Vedio: "",
+    comments: [
+      {
+        commentId: "",
+        username: "",
+        description: "",
+        time: "",
+      },
+    ],
+  };
   const dummyData = [
     {
       id: 0,
@@ -22,6 +52,21 @@ const Post = () => {
       description:
         "Hey everyone! 💪 Just crushed a killer full-body workout! Started with a 10-minute dynamic warm-up to get the blood flowing, then hit three rounds of circuits:Squats, push-ups, and bent-over rows for strength.Jumping jacks, mountain climbers, and burpees for cardio.Plank holds, Russian twists, and bicycle crunches for core work.Finished off with a 5-minute cool-down and stretch. Feeling the burn in all the right places! Who's joining me next time? #WorkoutMotivation #FitnessGoals",
       image: workoutImg,
+      comments: [
+        {
+          commentId: "",
+          username: "Alice",
+          description:
+            "Great workout, Jhon! 💪 I'll definitely join you next time! #FitnessGoals",
+          time: "September 14, 2022, 10:30 AM",
+        },
+        {
+          commentId: "",
+          username: "Michael",
+          description: "Sounds intense! 💪 Way to go, Jhon!",
+          time: "September 14, 2022, 11:15 AM",
+        },
+      ],
     },
     {
       id: 1,
@@ -31,6 +76,21 @@ const Post = () => {
         "Good morning! 🌞 Started my day with a refreshing run in the park. The crisp air and morning dew made it extra invigorating! Now, time for a hearty breakfast before tackling the day ahead. Wishing everyone a fantastic day ahead! #MorningRun #FreshStart",
       image:
         "https://images.pexels.com/photos/414029/pexels-photo-414029.jpeg?cs=srgb&dl=pexels-pixabay-414029.jpg&fm=jpg",
+      comments: [
+        {
+          commentId: "",
+          username: "Alice",
+          description:
+            "Great workout, Jhon! 💪 I'll definitely join you next time! #FitnessGoals",
+          time: "September 14, 2022, 10:30 AM",
+        },
+        {
+          commentId: "",
+          username: "Michael",
+          description: "Sounds intense! 💪 Way to go, Jhon!",
+          time: "September 14, 2022, 11:15 AM",
+        },
+      ],
     },
     {
       id: 2,
@@ -40,6 +100,21 @@ const Post = () => {
         "Happy Sunday, everyone! 🌟 Just finished baking some delicious cookies with my family. The house smells amazing! Now, it's time to cozy up with a cup of hot cocoa and enjoy these sweet treats. Wishing you all a relaxing day filled with warmth and joy! #FamilyTime #BakingFun",
       image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRow-N3NdCB2L4Is9f3qXwk1ObLJf2W8fNqq74Jcwamzg&s",
+      comments: [
+        {
+          commentId: "",
+          username: "Alice",
+          description:
+            "Great workout, Jhon! 💪 I'll definitely join you next time! #FitnessGoals",
+          time: "September 14, 2022, 10:30 AM",
+        },
+        {
+          commentId: "",
+          username: "Michael",
+          description: "Sounds intense! 💪 Way to go, Jhon!",
+          time: "September 14, 2022, 11:15 AM",
+        },
+      ],
     },
     {
       id: 3,
@@ -49,6 +124,21 @@ const Post = () => {
         "Feeling grateful for the little things in life today. ☺️ Took a moment to pause and appreciate the beauty of nature on my morning walk. The sunlight filtering through the trees, the chirping of birds - it's the simple moments like these that remind me of life's blessings. Wishing you all a peaceful day ahead! #Gratitude #NatureWalk",
       image:
         "https://plus.unsplash.com/premium_photo-1664109999537-088e7d964da2?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8d29ya291dHxlbnwwfHwwfHx8MA%3D%3D",
+      comments: [
+        {
+          commentId: "",
+          username: "Alice",
+          description:
+            "Great workout, Jhon! 💪 I'll definitely join you next time! #FitnessGoals",
+          time: "September 14, 2022, 10:30 AM",
+        },
+        {
+          commentId: "",
+          username: "Michael",
+          description: "Sounds intense! 💪 Way to go, Jhon!",
+          time: "September 14, 2022, 11:15 AM",
+        },
+      ],
     },
     {
       id: 4,
@@ -58,6 +148,21 @@ const Post = () => {
         "Hello, everyone! 👋 Excited to share that I just adopted a furry friend from the shelter. Meet Max - the newest member of our family! 🐾 Can't wait for all the adventures and cuddles ahead. Remember, adopt don't shop! #AdoptDontShop #NewFamilyMember",
       image:
         "https://tempo.fit/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2F5j7k2jx5znk1%2F5CcrranP2sCAemEK07mR3a%2Fbcd0b2bef750a1ceccf331945c377e9b%2Flunge.jpg&w=3840&q=80",
+      comments: [
+        {
+          commentId: "",
+          username: "Alice",
+          description:
+            "Great workout, Jhon! 💪 I'll definitely join you next time! #FitnessGoals",
+          time: "September 14, 2022, 10:30 AM",
+        },
+        {
+          commentId: "",
+          username: "Michael",
+          description: "Sounds intense! 💪 Way to go, Jhon!",
+          time: "September 14, 2022, 11:15 AM",
+        },
+      ],
     },
     {
       id: 5,
@@ -67,13 +172,63 @@ const Post = () => {
         "Happy birthday to me! 🎉 Grateful for another year of life, love, and laughter. Celebrating with good food, great friends, and lots of cake! 🎂 Here's to making more unforgettable memories in the year ahead! #BirthdayCelebration #AnotherYearOlder",
       image:
         "https://fitnessdocumentation.com/_next/image?url=https%3A%2F%2Fstorage.fitnessdocumentation.com%2Fsam_sulek2_2b0c8f713e.jpg&w=3840&q=75",
+      comments: [
+        {
+          commentId: "",
+          username: "Alice",
+          description:
+            "Great workout, Jhon! 💪 I'll definitely join you next time! #FitnessGoals",
+          time: "September 14, 2022, 10:30 AM",
+        },
+        {
+          commentId: "",
+          username: "Michael",
+          description: "Sounds intense! 💪 Way to go, Jhon!",
+          time: "September 14, 2022, 11:15 AM",
+        },
+      ],
     },
   ];
 
   const [post, setPost] = useState(dummyData);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [selectedComment, setSelectedComment] = useState(null);
+  const [posts, setPosts] = useState(null);
+    //retrive posts
+    useEffect(() => {
+      axios
+        .get("http://localhost:8080/api/post/")
+        .then((response) => {
+          setPosts(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching posts:", error);
+        });
+    }, []);
 
-  return post.map((d) => (
-    <Card sx={{ margin: 5 }}>
+  const handleOpenDialog = (comment) => {
+    setSelectedComment(comment);
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = (postId) => {
+    setOpenDialog(false);
+    console.log(postId, "POST");
+  };
+
+  const [newComment, setNewComment] = useState("");
+
+
+  console.log(posts, "posts");
+
+  const handleCommentSubmit = (postId) => {
+   
+    console.log("post :", postId);
+    
+  };
+
+  return posts?.map((d) => (
+    <Card key={d.postId} sx={{ margin: 5 }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
@@ -85,13 +240,16 @@ const Post = () => {
             <MoreVert />
           </IconButton>
         }
-        title={d.name}
-        subheader={d.date}
+        // title={d.name}
+        subheader={format(new Date(d.createdAt), 'MMMM dd, yyyy HH:mm')}
       />
+      <Typography variant="h6" fontFamily="Paella dish" sx={{ p: 2 }}>
+        {d.title}
+      </Typography>
       <CardMedia
         component="img"
         height="20%"
-        image={d.image}
+        image={`data:image/jpeg;base64,${d.filePath}`}
         alt="Paella dish"
       />
       <CardContent>
@@ -110,6 +268,75 @@ const Post = () => {
           <Share />
         </IconButton>
       </CardActions>
+      {/* Comment Section */}
+      <Accordion>
+        <AccordionSummary aria-controls="comment-content" id="comment-header">
+          <Box
+            width="100%"
+            sx={{ display: "flex", justifyContent: "space-between" }}
+          >
+            <Typography variant="subtitle2">Comments</Typography>
+            <IconButton onClick={(comment) => handleOpenDialog(comment)}>
+              <DriveFileRenameOutlineIcon />
+            </IconButton>
+          </Box>
+        </AccordionSummary>
+        <AccordionDetails sx={{ flexDirection: "column" }}>
+          {/* {d.comments.map((comment, index) => ( */}
+          <Box
+            // key={index}
+            sx={{
+              marginBottom: 2,
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <Avatar sx={{ bgcolor: "#ff6f61", marginRight: 2 }}>
+              {/* {comment.username.charAt(0)} */}
+            </Avatar>
+            <Box>
+              <Typography
+                variant="subtitle2"
+                sx={{ fontWeight: "bold", marginBottom: 1 }}
+              >
+                {/* {comment.username} */}
+              </Typography>
+              <Typography sx={{ marginBottom: 1 }}>
+                {/* {comment.description} */}
+              </Typography>
+              {/* <Typography variant="caption">{comment.time}</Typography> */}
+            </Box>
+          </Box>
+          {/* ))} */}
+        </AccordionDetails>
+      </Accordion>
+      <Dialog open={openDialog} onClose={handleCloseDialog}>
+        <DialogTitle>Add Comment</DialogTitle>
+        <DialogContent>
+          <Typography>{selectedComment?.description}</Typography>
+          <TextField
+            placeholder="Add comment"
+            variant="outlined"
+            fullWidth
+            // Add onChange handler to capture input value
+            onChange={(e) => setNewComment(e.target.value)}
+            // Value of the input controlled by state
+            value={newComment}
+            // Handle submission of the comment
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                handleCommentSubmit(d.id);
+              }
+            }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog}>Cancel</Button>
+          <Button color="primary" onClick={() => handleCloseDialog(d.id)}>
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Card>
   ));
 };
