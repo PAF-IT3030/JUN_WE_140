@@ -15,6 +15,7 @@ import java.util.Date;
 public class PostDTO {
 
 //    private String userId;
+    private  Long postId;
     private String title;
     private String description;
     private String filePath;

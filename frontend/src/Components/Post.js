@@ -22,7 +22,8 @@ import {
   Typography,
 } from "@mui/material";
 import workoutImg from "../Images/workout.jpg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Post = () => {
   const initialPost = {
@@ -191,6 +192,7 @@ const Post = () => {
   const [post, setPost] = useState(dummyData);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedComment, setSelectedComment] = useState(null);
+  const [posts, setPosts] = useState();
 
   const handleOpenDialog = (comment) => {
     setSelectedComment(comment);
@@ -204,6 +206,19 @@ const Post = () => {
 
   const [newComment, setNewComment] = useState("");
 
+  //retrive posts
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/api/post/")
+      .then((response) => {
+        setPosts(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching posts:", error);
+      });
+  }, []);
+  console.log(posts, "posts");
+
   const handleCommentSubmit = (postId) => {
     // Logic to submit the new comment
     // You can use the postId to identify which post the comment belongs to
@@ -212,7 +227,7 @@ const Post = () => {
     // setNewComment("");
   };
 
-  return post.map((d) => (
+  return posts.map((d) => (
     <Card key={d.id} sx={{ margin: 5 }}>
       <CardHeader
         avatar={
@@ -225,13 +240,16 @@ const Post = () => {
             <MoreVert />
           </IconButton>
         }
-        title={d.name}
-        subheader={d.date}
+        // title={d.name}
+        subheader={d.createdAt}
       />
+      <Typography variant="h6" fontFamily="Paella dish" sx={{ p: 2 }}>
+        {d.title}
+      </Typography>
       <CardMedia
         component="img"
         height="20%"
-        image={d.image}
+        image={`data:image/jpeg;base64,${d.filePath}`}
         alt="Paella dish"
       />
       <CardContent>
@@ -264,32 +282,32 @@ const Post = () => {
           </Box>
         </AccordionSummary>
         <AccordionDetails sx={{ flexDirection: "column" }}>
-          {d.comments.map((comment, index) => (
-            <Box
-              key={index}
-              sx={{
-                marginBottom: 2,
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Avatar sx={{ bgcolor: "#ff6f61", marginRight: 2 }}>
-                {comment.username.charAt(0)}
-              </Avatar>
-              <Box>
-                <Typography
-                  variant="subtitle2"
-                  sx={{ fontWeight: "bold", marginBottom: 1 }}
-                >
-                  {comment.username}
-                </Typography>
-                <Typography sx={{ marginBottom: 1 }}>
-                  {comment.description}
-                </Typography>
-                <Typography variant="caption">{comment.time}</Typography>
-              </Box>
+          {/* {d.comments.map((comment, index) => ( */}
+          <Box
+            // key={index}
+            sx={{
+              marginBottom: 2,
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <Avatar sx={{ bgcolor: "#ff6f61", marginRight: 2 }}>
+              {/* {comment.username.charAt(0)} */}
+            </Avatar>
+            <Box>
+              <Typography
+                variant="subtitle2"
+                sx={{ fontWeight: "bold", marginBottom: 1 }}
+              >
+                {/* {comment.username} */}
+              </Typography>
+              <Typography sx={{ marginBottom: 1 }}>
+                {/* {comment.description} */}
+              </Typography>
+              {/* <Typography variant="caption">{comment.time}</Typography> */}
             </Box>
-          ))}
+          </Box>
+          {/* ))} */}
         </AccordionDetails>
       </Accordion>
       <Dialog open={openDialog} onClose={handleCloseDialog}>
