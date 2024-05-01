@@ -1,15 +1,21 @@
 package com.bakend.strengthHUB.dto;
 
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.util.Date;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class PostDTO {
-    @Id
-    private Long postId;
-    private Long userId;
-    private Date postedDate;
+
+//    private String userId;
+    private String title;
     private String description;
-    private Long fileName;
+    private String filePath;
 }
