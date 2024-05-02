@@ -8,6 +8,7 @@ import Navbar from "./Components/NavBar";
 import CreateMeal from "./Pages/CreateMeal";
 import CreateUpdate from "./Pages/CreateUpdate";
 import DeleteMeal from "./Pages/DeleteMeal";
+import DeleteUpdate from "./Pages/DeleteUpdate";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/Createmeal" element={<CreateMeal />} />
           <Route path="/Createupdates" element={<CreateUpdate />} />
           <Route path="/Deletemeal/:id" element={<DeleteMeal />} />
+          <Route path="/Deleteupdate/:id" element={<DeleteUpdate />} />
         </Routes>
       </BrowserRouter>
     </Box>
