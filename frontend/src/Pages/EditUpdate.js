@@ -74,6 +74,17 @@ const EditUpdate = () => {
                   className="ring-1 ring-slate-400 rounded-md py-1 px-2 "
                 />
               </div>
+              <div className="flex flex-col gap-2 mb-5 ">
+                <label className="text-lg font-medium">Refs</label>
+                <input
+                  type="number"
+                  name="reps"
+                  value={reps}
+                  onChange={(e) => setReps(e.target.value)}
+                  placeholder="Reps"
+                  className="ring-1 ring-slate-400 rounded-md py-1 px-2 "
+                />
+              </div>
 
             </form>
           </div>
