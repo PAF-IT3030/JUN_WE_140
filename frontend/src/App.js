@@ -7,6 +7,7 @@ import { Box } from "@mui/material";
 import Navbar from "./Components/NavBar";
 import CreateMeal from "./Pages/CreateMeal";
 
+
 function App() {
   return (
     <Box>
@@ -17,6 +18,7 @@ function App() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/Createmeal" element={<CreateMeal />} />
+    
         </Routes>
       </BrowserRouter>
     </Box>
