@@ -11,6 +11,7 @@ import DeleteMeal from "./Pages/DeleteMeal";
 import DeleteUpdate from "./Pages/DeleteUpdate";
 import EditMeal from "./Pages/EditMeal";
 import EditUpdate from "./Pages/EditUpdate";
+import Meals from "./Pages/Meals";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/Deleteupdate/:id" element={<DeleteUpdate />} />
           <Route path="/Editmeal/:id" element={<EditMeal />} />
           <Route path="/Editupdate/:id" element={<EditUpdate />} />
+          <Route path="/meals" element={<Meals />} />
         </Routes>
       </BrowserRouter>
     </Box>

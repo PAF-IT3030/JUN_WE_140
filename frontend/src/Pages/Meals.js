@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Meals = () => {
-    const [meals, setmeals] = useState([]);
+    const [meals, setMeals] = useState([]);
   
     useEffect(() => {
       axios
