@@ -27,6 +27,27 @@ const EditUpdate = () => {
         });
     }, [id]);
 
+    const handleEditWorkout = (e) => {
+        const data = {
+          exercise,
+          sets,
+          reps,
+          weight,
+          notes,
+        };
+    
+        e.preventDefault();
+        axios
+          .put(`http://localhost:8081/workout/${id}`, data)
+          .then(() => {
+            navigate("/updates");
+          })
+          .catch((err) => {
+            alert("Something went wrong..");
+            console.log(err);
+          });
+    };
+
 };
 
 export default EditUpdate;
