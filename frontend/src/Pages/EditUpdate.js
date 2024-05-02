@@ -96,6 +96,17 @@ const EditUpdate = () => {
                   className="ring-1 ring-slate-400 rounded-md py-1 px-2 "
                 />
               </div>
+              <div className="flex flex-col gap-2 mb-5 ">
+                <label className="text-lg font-medium">Note</label>
+                <textarea
+                  type="number"
+                  name="notes"
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  placeholder="Note"
+                  className="ring-1 ring-slate-400 rounded-md py-1 px-2 "
+                />
+              </div>
 
             </form>
           </div>
