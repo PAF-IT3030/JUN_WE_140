@@ -73,6 +73,18 @@ const EditMeal = () => {
             />
           </div>
 
+          <div className="flex flex-col gap-2 mb-5 ">
+            <label className="text-lg font-medium">Calories</label>
+            <input
+              type="text"
+              name="calories"
+              value={calories}
+              onChange={(e) => setCalories(e.target.value)}
+              placeholder="calories"
+              className="ring-1 ring-slate-400 rounded-md py-1 px-2 "
+            />
+          </div>
+
          
         </form>
       </div>
