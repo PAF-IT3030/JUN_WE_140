@@ -61,6 +61,18 @@ const EditMeal = () => {
             />
           </div>
 
+          <div className="flex flex-col gap-2 mb-5 ">
+            <label className="text-lg font-medium">Owner</label>
+            <input
+              type="text"
+              name="owner"
+              value={owner}
+              onChange={(e) => setOwner(e.target.value)}
+              placeholder="owner"
+              className="ring-1 ring-slate-400 rounded-md py-1 px-2 "
+            />
+          </div>
+
          
         </form>
       </div>
