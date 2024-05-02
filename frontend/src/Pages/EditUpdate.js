@@ -48,6 +48,28 @@ const EditUpdate = () => {
           });
     };
 
+    return (
+        <div className="w-full absolute px-20 ">
+          <div className="mt-24 w-[40%] mx-auto shadow-lg p-5 rounded-lg ">
+            <form>
+              <div className="flex flex-col gap-2 mb-5 ">
+                <label className="text-lg font-medium">Excersice</label>
+                <input
+                  type="text"
+                  name="excersice"
+                  value={exercise}
+                  onChange={(e) => setExercise(e.target.value)}
+                  placeholder="Excersice"
+                  className="ring-1 ring-slate-400 rounded-md py-1 px-2 "
+                />
+              </div>
+              
+              
+            </form>
+          </div>
+        </div>
+      );
+
 };
 
 export default EditUpdate;
