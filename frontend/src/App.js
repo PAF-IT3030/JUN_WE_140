@@ -7,6 +7,7 @@ import { Box } from "@mui/material";
 import Navbar from "./Components/NavBar";
 import CreateMeal from "./Pages/CreateMeal";
 import CreateUpdate from "./Pages/CreateUpdate";
+import DeleteMeal from "./Pages/DeleteMeal";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/Createmeal" element={<CreateMeal />} />
           <Route path="/Createupdates" element={<CreateUpdate />} />
+          <Route path="/Deletemeal/:id" element={<DeleteMeal />} />
         </Routes>
       </BrowserRouter>
     </Box>
