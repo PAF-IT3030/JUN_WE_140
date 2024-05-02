@@ -85,6 +85,17 @@ const EditUpdate = () => {
                   className="ring-1 ring-slate-400 rounded-md py-1 px-2 "
                 />
               </div>
+              <div className="flex flex-col gap-2 mb-5 ">
+                <label className="text-lg font-medium">Weight</label>
+                <input
+                  type="number"
+                  name="weight"
+                  value={weight}
+                  onChange={(e) => setWeight(e.target.value)}
+                  placeholder="Weight"
+                  className="ring-1 ring-slate-400 rounded-md py-1 px-2 "
+                />
+              </div>
 
             </form>
           </div>
