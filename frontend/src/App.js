@@ -9,6 +9,7 @@ import CreateMeal from "./Pages/CreateMeal";
 import CreateUpdate from "./Pages/CreateUpdate";
 import DeleteMeal from "./Pages/DeleteMeal";
 import DeleteUpdate from "./Pages/DeleteUpdate";
+import EditMeal from "./Pages/EditMeal";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/Createupdates" element={<CreateUpdate />} />
           <Route path="/Deletemeal/:id" element={<DeleteMeal />} />
           <Route path="/Deleteupdate/:id" element={<DeleteUpdate />} />
+          <Route path="/Editmeal/:id" element={<EditMeal />} />
         </Routes>
       </BrowserRouter>
     </Box>
