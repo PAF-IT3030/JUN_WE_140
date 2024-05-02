@@ -19,4 +19,12 @@ const CreateUpdate = () => {
         notes,
       };
 
-      
+      e.preventDefault();
+    axios
+      .post("http://localhost:8081/workout", data)
+      .then(() => navigate("/updates"))
+      .catch((err) => {
+        alert("Something went wrong...");
+        console.log(err);
+      });
+  };
