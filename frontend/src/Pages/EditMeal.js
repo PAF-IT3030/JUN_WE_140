@@ -85,6 +85,18 @@ const EditMeal = () => {
             />
           </div>
 
+          <div className="flex flex-col gap-2 mb-5 ">
+            <label className="text-lg font-medium">Plan</label>
+            <textarea
+              type="text"
+              name="plan"
+              value={plan}
+              onChange={(e) => setPlan(e.target.value)}
+              placeholder="plan"
+              className="ring-1 ring-slate-400 rounded-md py-1 px-2 "
+            />
+          </div>
+
          
         </form>
       </div>
