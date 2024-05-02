@@ -10,6 +10,7 @@ import CreateUpdate from "./Pages/CreateUpdate";
 import DeleteMeal from "./Pages/DeleteMeal";
 import DeleteUpdate from "./Pages/DeleteUpdate";
 import EditMeal from "./Pages/EditMeal";
+import EditUpdate from "./Pages/EditUpdate";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/Deletemeal/:id" element={<DeleteMeal />} />
           <Route path="/Deleteupdate/:id" element={<DeleteUpdate />} />
           <Route path="/Editmeal/:id" element={<EditMeal />} />
+          <Route path="/Editupdate/:id" element={<EditUpdate />} />
         </Routes>
       </BrowserRouter>
     </Box>
