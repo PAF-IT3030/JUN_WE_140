@@ -107,7 +107,12 @@ const EditUpdate = () => {
                   className="ring-1 ring-slate-400 rounded-md py-1 px-2 "
                 />
               </div>
-
+              <button
+                onClick={handleEditWorkout}
+                className=" bg-[#ffb703] px-8 py-1 rounded-lg text-white"
+              >
+                Save
+              </button>
             </form>
           </div>
         </div>
