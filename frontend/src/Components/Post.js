@@ -194,12 +194,25 @@ const Post = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedComment, setSelectedComment] = useState(null);
   const [posts, setPosts] = useState(null);
-    //retrive posts
+  const [comments, setComments] = useState(null)
+    //call apis
     useEffect(() => {
+
+      //retrive posts
       axios
         .get("http://localhost:8080/api/post/")
         .then((response) => {
           setPosts(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching posts:", error);
+        });
+
+        //retrive comments
+        axios
+        .get("http://localhost:8080/api/comments/")
+        .then((response) => {
+          setComments(response.data);
         })
         .catch((error) => {
           console.error("Error fetching posts:", error);
@@ -219,7 +232,7 @@ const Post = () => {
   const [newComment, setNewComment] = useState("");
 
 
-  console.log(posts, "posts");
+  console.log(comments, "comments");
 
   const handleCommentSubmit = (postId) => {
    
@@ -282,9 +295,9 @@ const Post = () => {
           </Box>
         </AccordionSummary>
         <AccordionDetails sx={{ flexDirection: "column" }}>
-          {/* {d.comments.map((comment, index) => ( */}
+          {comments?.map((comment) => ( 
           <Box
-            // key={index}
+            key={comment.commentId}
             sx={{
               marginBottom: 2,
               display: "flex",
@@ -299,15 +312,15 @@ const Post = () => {
                 variant="subtitle2"
                 sx={{ fontWeight: "bold", marginBottom: 1 }}
               >
-                {/* {comment.username} */}
+                {comment.userId} 
               </Typography>
               <Typography sx={{ marginBottom: 1 }}>
-                {/* {comment.description} */}
+                 {comment.comment} 
               </Typography>
-              {/* <Typography variant="caption">{comment.time}</Typography> */}
+              {/* <Typography variant="caption">{d.createdAt}</Typography>  */}
             </Box>
           </Box>
-          {/* ))} */}
+          ))}
         </AccordionDetails>
       </Accordion>
       <Dialog open={openDialog} onClose={handleCloseDialog}>
