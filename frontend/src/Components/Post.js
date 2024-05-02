@@ -24,7 +24,7 @@ import {
 import workoutImg from "../Images/workout.jpg";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { format } from 'date-fns';
+import { format } from "date-fns";
 
 const Post = () => {
   const initialPost = {
@@ -194,50 +194,70 @@ const Post = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedComment, setSelectedComment] = useState(null);
   const [posts, setPosts] = useState(null);
-  const [comments, setComments] = useState(null)
-    //call apis
-    useEffect(() => {
+  const [comments, setComments] = useState(null);
+  const [error, setError] = useState(null);
+  const [newComment, setNewComment] = useState("");
+  //call apis
+  useEffect(() => {
+    //retrive posts
+    axios
+      .get("http://localhost:8080/api/post/")
+      .then((response) => {
+        setPosts(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching posts:", error);
+      });
 
-      //retrive posts
-      axios
-        .get("http://localhost:8080/api/post/")
-        .then((response) => {
-          setPosts(response.data);
-        })
-        .catch((error) => {
-          console.error("Error fetching posts:", error);
-        });
+    //retrive comments
+    axios
+      .get("http://localhost:8080/api/comments/")
+      .then((response) => {
+        setComments(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching posts:", error);
+      });
+  }, []);
 
-        //retrive comments
-        axios
-        .get("http://localhost:8080/api/comments/")
-        .then((response) => {
-          setComments(response.data);
-        })
-        .catch((error) => {
-          console.error("Error fetching posts:", error);
-        });
-    }, []);
+  //send data
 
-  const handleOpenDialog = (comment) => {
-    setSelectedComment(comment);
+  const handleOpenDialog = async (e) => {
+    e.preventDefault();
+    console.log(newComment,"clg")
+
+    setSelectedComment(e);
     setOpenDialog(true);
   };
 
-  const handleCloseDialog = (postId) => {
+  const handleCloseDialog = async(postId) => {
     setOpenDialog(false);
-    console.log(postId, "POST");
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/comments/",
+        {
+          userId: "uid001",
+          comment: newComment,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("Comment added:", response.data);
+      // Optionally, you can reset the form or show a success message here
+    } catch (error) {
+      setError("Failed to add comment");
+      console.error("Error adding comment:", error);
+    }
+  
   };
 
-  const [newComment, setNewComment] = useState("");
-
-
-  console.log(comments, "comments");
+  console.log(newComment, "comments");
 
   const handleCommentSubmit = (postId) => {
-   
     console.log("post :", postId);
-    
   };
 
   return posts?.map((d) => (
@@ -254,7 +274,7 @@ const Post = () => {
           </IconButton>
         }
         // title={d.name}
-        subheader={format(new Date(d.createdAt), 'MMMM dd, yyyy HH:mm')}
+        subheader={format(new Date(d.createdAt), "MMMM dd, yyyy HH:mm")}
       />
       <Typography variant="h6" fontFamily="Paella dish" sx={{ p: 2 }}>
         {d.title}
@@ -295,31 +315,31 @@ const Post = () => {
           </Box>
         </AccordionSummary>
         <AccordionDetails sx={{ flexDirection: "column" }}>
-          {comments?.map((comment) => ( 
-          <Box
-            key={comment.commentId}
-            sx={{
-              marginBottom: 2,
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Avatar sx={{ bgcolor: "#ff6f61", marginRight: 2 }}>
-              {/* {comment.username.charAt(0)} */}
-            </Avatar>
-            <Box>
-              <Typography
-                variant="subtitle2"
-                sx={{ fontWeight: "bold", marginBottom: 1 }}
-              >
-                {comment.userId} 
-              </Typography>
-              <Typography sx={{ marginBottom: 1 }}>
-                 {comment.comment} 
-              </Typography>
-              {/* <Typography variant="caption">{d.createdAt}</Typography>  */}
+          {comments?.map((comment) => (
+            <Box
+              key={comment.commentId}
+              sx={{
+                marginBottom: 2,
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Avatar sx={{ bgcolor: "#ff6f61", marginRight: 2 }}>
+                {/* {comment.username.charAt(0)} */}
+              </Avatar>
+              <Box>
+                <Typography
+                  variant="subtitle2"
+                  sx={{ fontWeight: "bold", marginBottom: 1 }}
+                >
+                  {comment.userId}
+                </Typography>
+                <Typography sx={{ marginBottom: 1 }}>
+                  {comment.comment}
+                </Typography>
+                {/* <Typography variant="caption">{d.createdAt}</Typography>  */}
+              </Box>
             </Box>
-          </Box>
           ))}
         </AccordionDetails>
       </Accordion>
@@ -334,13 +354,13 @@ const Post = () => {
             // Add onChange handler to capture input value
             onChange={(e) => setNewComment(e.target.value)}
             // Value of the input controlled by state
-            value={newComment}
+            value={newComment?.comment}
             // Handle submission of the comment
-            onKeyPress={(e) => {
-              if (e.key === "Enter") {
-                handleCommentSubmit(d.id);
-              }
-            }}
+            // onKeyPress={(e) => {
+            //   if (e.key === "Enter") {
+            //     handleCommentSubmit(d.id);
+            //   }
+            // }}
           />
         </DialogContent>
         <DialogActions>
