@@ -25,6 +25,27 @@ const EditMeal = () => {
           });
       }, [id]);
 
+      const handleEditMeal = (e) => {
+        const data = {
+          title,
+          owner,
+          calories,
+          plan,
+        };
+
+        e.preventDefault();
+    axios
+      .put(`http://localhost:8081/workout/${id}`, data)
+      .then(() => {
+        navigate("/meals");
+      })
+      .catch((err) => {
+        alert("Something went wrong..");
+        console.log(err);
+      });
+  };
+
+
     };
 
     export default EditMeal;
