@@ -1,19 +1,52 @@
 import { Favorite, FavoriteBorder, MoreVert, Share } from "@mui/icons-material";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Avatar,
+  Box,
+  Button,
   Card,
   CardActions,
   CardContent,
   CardHeader,
   CardMedia,
   Checkbox,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   IconButton,
+  TextField,
   Typography,
 } from "@mui/material";
 import workoutImg from "../Images/workout.jpg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { format } from "date-fns";
+import RateReviewIcon from "@mui/icons-material/RateReview";
+import AddCommentIcon from "@mui/icons-material/AddComment";
 
 const Post = () => {
+  const initialPost = {
+    postId: 0,
+    userId: "",
+    name: "",
+    date: "",
+    description: "",
+    image: "",
+    Vedio: "",
+    comments: [
+      {
+        commentId: "",
+        username: "",
+        description: "",
+        time: "",
+      },
+    ],
+  };
   const dummyData = [
     {
       id: 0,
@@ -22,6 +55,21 @@ const Post = () => {
       description:
         "Hey everyone! 💪 Just crushed a killer full-body workout! Started with a 10-minute dynamic warm-up to get the blood flowing, then hit three rounds of circuits:Squats, push-ups, and bent-over rows for strength.Jumping jacks, mountain climbers, and burpees for cardio.Plank holds, Russian twists, and bicycle crunches for core work.Finished off with a 5-minute cool-down and stretch. Feeling the burn in all the right places! Who's joining me next time? #WorkoutMotivation #FitnessGoals",
       image: workoutImg,
+      comments: [
+        {
+          commentId: "1",
+          username: "Alice",
+          description:
+            "Great workout, Jhon! 💪 I'll definitely join you next time! #FitnessGoals",
+          time: "September 14, 2022, 10:30 AM",
+        },
+        {
+          commentId: "2",
+          username: "Michael",
+          description: "Sounds intense! 💪 Way to go, Jhon!",
+          time: "September 14, 2022, 11:15 AM",
+        },
+      ],
     },
     {
       id: 1,
@@ -31,49 +79,129 @@ const Post = () => {
         "Good morning! 🌞 Started my day with a refreshing run in the park. The crisp air and morning dew made it extra invigorating! Now, time for a hearty breakfast before tackling the day ahead. Wishing everyone a fantastic day ahead! #MorningRun #FreshStart",
       image:
         "https://images.pexels.com/photos/414029/pexels-photo-414029.jpeg?cs=srgb&dl=pexels-pixabay-414029.jpg&fm=jpg",
+      comments: [
+        {
+          commentId: "3",
+          username: "Alice",
+          description:
+            "Great workout, Jhon! 💪 I'll definitely join you next time! #FitnessGoals",
+          time: "September 14, 2022, 10:30 AM",
+        },
+        {
+          commentId: "4",
+          username: "Michael",
+          description: "Sounds intense! 💪 Way to go, Jhon!",
+          time: "September 14, 2022, 11:15 AM",
+        },
+      ],
     },
-    {
-      id: 2,
-      name: "Emma",
-      date: "November 20, 2022",
-      description:
-        "Happy Sunday, everyone! 🌟 Just finished baking some delicious cookies with my family. The house smells amazing! Now, it's time to cozy up with a cup of hot cocoa and enjoy these sweet treats. Wishing you all a relaxing day filled with warmth and joy! #FamilyTime #BakingFun",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRow-N3NdCB2L4Is9f3qXwk1ObLJf2W8fNqq74Jcwamzg&s",
-    },
-    {
-      id: 3,
-      name: "Michael",
-      date: "December 5, 2022",
-      description:
-        "Feeling grateful for the little things in life today. ☺️ Took a moment to pause and appreciate the beauty of nature on my morning walk. The sunlight filtering through the trees, the chirping of birds - it's the simple moments like these that remind me of life's blessings. Wishing you all a peaceful day ahead! #Gratitude #NatureWalk",
-      image:
-        "https://plus.unsplash.com/premium_photo-1664109999537-088e7d964da2?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8d29ya291dHxlbnwwfHwwfHx8MA%3D%3D",
-    },
-    {
-      id: 4,
-      name: "Sophia",
-      date: "January 10, 2023",
-      description:
-        "Hello, everyone! 👋 Excited to share that I just adopted a furry friend from the shelter. Meet Max - the newest member of our family! 🐾 Can't wait for all the adventures and cuddles ahead. Remember, adopt don't shop! #AdoptDontShop #NewFamilyMember",
-      image:
-        "https://tempo.fit/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2F5j7k2jx5znk1%2F5CcrranP2sCAemEK07mR3a%2Fbcd0b2bef750a1ceccf331945c377e9b%2Flunge.jpg&w=3840&q=80",
-    },
-    {
-      id: 5,
-      name: "Oliver",
-      date: "February 22, 2023",
-      description:
-        "Happy birthday to me! 🎉 Grateful for another year of life, love, and laughter. Celebrating with good food, great friends, and lots of cake! 🎂 Here's to making more unforgettable memories in the year ahead! #BirthdayCelebration #AnotherYearOlder",
-      image:
-        "https://fitnessdocumentation.com/_next/image?url=https%3A%2F%2Fstorage.fitnessdocumentation.com%2Fsam_sulek2_2b0c8f713e.jpg&w=3840&q=75",
-    },
+    // Add more dummy data as needed
   ];
 
   const [post, setPost] = useState(dummyData);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [selectedComment, setSelectedComment] = useState(null);
+  const [posts, setPosts] = useState(null);
+  const [comments, setComments] = useState(null);
+  const [error, setError] = useState(null);
+  const [newComment, setNewComment] = useState("");
+  //call apis
+  useEffect(() => {
+    //retrive posts
+    axios
+      .get("http://localhost:8080/api/post/")
+      .then((response) => {
+        setPosts(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching posts:", error);
+      });
 
-  return post.map((d) => (
-    <Card sx={{ margin: 5 }}>
+    //retrive comments
+    axios
+      .get("http://localhost:8080/api/comments/")
+      .then((response) => {
+        setComments(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching posts:", error);
+      });
+  }, []);
+
+  //send data
+
+  const handleOpenDialog = async (comment) => {
+    console.log(comment,"ceeeeeeeeeee")
+    if (comment) {
+      // If a comment is provided, it means we are updating an existing comment
+      setSelectedComment(comment);
+      setNewComment(comment.description); // Populate the dialog with the existing comment
+    } else {
+      // If no comment is provided, it means we are adding a new comment
+      setSelectedComment(null);
+      setNewComment(""); // Clear the input field
+    }
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = async () => {
+    setOpenDialog(false);
+    console.log(selectedComment?.commentId,"commmetttttttttttttttttt",newComment)
+    try {
+      if (selectedComment && selectedComment.commentId) {
+        // If selectedComment is not null, it means we are updating an existing comment
+        const response = await axios.put(
+          `http://localhost:8080/api/comments/${selectedComment.commentId}`,
+          {
+            comment: newComment,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log("Comment updated:", response.data);
+      } else {
+        // If selectedComment is null, it means we are adding a new comment
+        const response = await axios.post(
+          "http://localhost:8080/api/comments/",
+          {
+            userId: "uid001",
+            comment: newComment,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log("Comment added:", response.data);
+      }
+      // Optionally, you can reset the form or show a success message here
+    } catch (error) {
+      setError("Failed to add/update comment");
+      console.error("Error adding/updating comment:", error);
+    }
+  };
+
+  //delete comment
+  const handleDeleteComment = async (commentId) => {
+    try {
+      await axios.delete(`http://localhost:8080/api/comments/${commentId}`);
+      // Update the state to reflect the deletion
+      setComments((prevComments) =>
+        prevComments.filter((comment) => comment.commentId !== commentId)
+      );
+      console.log("Comment deleted:", commentId);
+    } catch (error) {
+      setError("Failed to delete comment");
+      console.error("Error deleting comment:", error);
+    }
+  };
+
+  return posts?.map((d) => (
+    <Card key={d.postId} sx={{ margin: 5 }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
@@ -85,13 +213,16 @@ const Post = () => {
             <MoreVert />
           </IconButton>
         }
-        title={d.name}
-        subheader={d.date}
+        // title={d.name}
+        subheader={format(new Date(d.createdAt), "MMMM dd, yyyy HH:mm")}
       />
+      <Typography variant="h6" fontFamily="Paella dish" sx={{ p: 2 }}>
+        {d.title}
+      </Typography>
       <CardMedia
         component="img"
         height="20%"
-        image={d.image}
+        image={`data:image/jpeg;base64,${d.filePath}`}
         alt="Paella dish"
       />
       <CardContent>
@@ -110,6 +241,82 @@ const Post = () => {
           <Share />
         </IconButton>
       </CardActions>
+      {/* Comment Section */}
+      <Accordion>
+        <AccordionSummary aria-controls="comment-content" id="comment-header">
+          <Box
+            width="100%"
+            sx={{ display: "flex", justifyContent: "space-between" }}
+          >
+            <Typography variant="subtitle2">Comments</Typography>
+            <IconButton onClick={() => handleOpenDialog()}>
+              <AddCommentIcon />
+            </IconButton>
+          </Box>
+        </AccordionSummary>
+        <AccordionDetails sx={{ flexDirection: "column" }}>
+          {comments?.map((comment) => (
+            <Box
+              key={comment.commentId}
+              sx={{
+                marginBottom: 2,
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Avatar sx={{ bgcolor: "#ff6f61", marginRight: 2 }}>
+                {/* {comment.username.charAt(0)} */}
+              </Avatar>
+              <Box>
+                <Typography
+                  variant="subtitle2"
+                  sx={{ fontWeight: "bold", marginBottom: 1 }}
+                >
+                  {comment.userId}
+                </Typography>
+                <Typography sx={{ marginBottom: 1 }}>
+                  {comment.comment}
+                </Typography>
+                {/* <Typography variant="caption">{d.createdAt}</Typography> */}
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  marginLeft: "auto",
+                }}
+              >
+                <IconButton onClick={() => handleOpenDialog(comment)}>
+                  <EditIcon />
+                </IconButton>
+                <IconButton onClick={() => handleDeleteComment(comment.commentId)}>
+                  <DeleteIcon />
+                </IconButton>
+              </Box>
+            </Box>
+          ))}
+        </AccordionDetails>
+      </Accordion>
+      <Dialog open={openDialog} onClose={handleCloseDialog}>
+        <DialogTitle>{selectedComment ? "Edit Comment" : "Add Comment"}</DialogTitle>
+        <DialogContent>
+          <TextField
+            placeholder="Add comment"
+            variant="outlined"
+            fullWidth
+            // Add onChange handler to capture input value
+            onChange={(e) => setNewComment(e.target.value)}
+            // Value of the input controlled by state
+            value={newComment}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog}>Cancel</Button>
+          <Button color="primary" onClick={handleCloseDialog}>
+            {selectedComment ? "Save" : "Add"}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Card>
   ));
 };

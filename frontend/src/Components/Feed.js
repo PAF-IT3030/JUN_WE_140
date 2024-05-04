@@ -2,7 +2,6 @@ import {
   Box,
   Stack,
   Skeleton,
-  Button,
   IconButton,
   TextField,
 } from "@mui/material";
@@ -61,11 +60,6 @@ function Feed() {
         </Stack>
       ) : (
         <>
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
           <Post />
         </>
       )}
