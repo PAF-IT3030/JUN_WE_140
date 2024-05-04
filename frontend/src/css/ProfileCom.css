@@ -48,7 +48,7 @@
     width: 63.2rem;
     height: 28rem;
     object-fit: cover;
-    
+    border-radius: 10px;
 }
 
 .BIBackground {
@@ -203,5 +203,9 @@
     width: 40px;
     padding: 2px 3px;
     margin: 8px;
+}
+
+.post {
+   /* margin-top: 100px;*/
 }
 

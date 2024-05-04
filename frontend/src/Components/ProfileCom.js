@@ -14,6 +14,7 @@ import weight from '../Images/Weight3.png'
 import height from '../Images/Height7.png'
 import email from '../Images/email1.png'
 import phone from '../Images/phone1.png'
+import Post from './Post';
 
 
 
@@ -92,6 +93,11 @@ function ProfileCom() {
         <h1 className='MealPlanTitle'>Meal Plan</h1>
     </div>
     </Box>
+
+    <Box className='post'>
+    <Post />
+    </Box>
+
     </Box>
   )
 }
