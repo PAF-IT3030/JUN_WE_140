@@ -1,14 +1,14 @@
-import StoryProfile2 from '../images/img/StoryProfile2.jpg'
-import StoryProfile3 from '../images/img/StoryProfile3.jpg'
-import StoryProfile4 from '../images/img/StoryProfile4.jpg'
-import StoryProfile5 from '../images/img/StoryProfile5.jpg'
-import StoryProfile6 from '../images/img/StoryProfile6.jpg'
+import StoryProfile2 from '../../Images/StoryProfile2.jpg'
+import StoryProfile3 from '../../Images/StoryProfile3.jpg'
+import StoryProfile4 from '../../Images/StoryProfile4.jpg'
+import StoryProfile5 from '../../Images/StoryProfile5.jpg'
+import StoryProfile6 from '../../Images/StoryProfile6.jpg'
 
-import story2 from '../images/img/story2.jpg'
-import story3 from '../images/img/story3.jpg'
-import story4 from '../images/img/story4.jpg'
-import story5 from '../images/img/story5.jpg'
-import story6 from '../images/img/story6.jpg'
+import story2 from '../../Images/story2.jpg'
+import story3 from '../../Images/story3.jpg'
+import story4 from '../../Images/story4.jpg'
+import story5 from '../../Images/story5.jpg'
+import story6 from '../../Images/story6.jpg'
 
 export const Users = [
     {
@@ -58,77 +58,77 @@ export const Users = [
       name: "Leanne Graham",
       username: "Gloria",
       email: "Sincere@april.biz",
-      profilePicture: "../../images/img/StoryProfile4.jpg",
+      profilePicture: "../../../Images/StoryProfile4.jpg",
     },
     {
       id: 2,
       name: "Ervin Howell",
       username: "Madison",
       email: "Shanna@melissa.tv",
-      profilePicture: "../../images/img/StoryProfile4.jpg",
+      profilePicture: "../../../Images/StoryProfile4.jpg",
     },
     {
       id: 3,
       name: "Clementine Bauch",
       username: "Abigail",
       email: "Nathan@yesenia.net",
-      profilePicture: "../../images/img/StoryProfile4.jpg",
+      profilePicture: "../../../Images/StoryProfile4.jpg",
     },
     {
       id: 4,
       name: "Patricia Lebsack",
       username: "Sophia",
       email: "Julianne.OConner@kory.org",
-      profilePicture: "../../images/img/StoryProfile4.jpg",
+      profilePicture: "../../../Images/StoryProfile4.jpg",
     },
     {
       id: 5,
       name: "Chelsey Dietrich",
       username: "Marilyn",
       email: "Lucio_Hettinger@annie.ca",
-      profilePicture: "../../images/img/StoryProfile4.jpg",
+      profilePicture: "../../../Images/StoryProfile4.jpg",
     },
     {
       id: 6,
       name: "Mrs. Dennis Schulist",
       username: "Doris",
       email: "Karley_Dach@jasper.info",
-      profilePicture: "../../images/img/StoryProfile4.jpg",
+      profilePicture: "../../../Images/StoryProfile4.jpg",
     },
     {
       id: 7,
       name: "Kurtis Weissnat",
       username: "Rachel",
       email: "Telly.Hoeger@billy.biz",
-      profilePicture: "../../images/img/StoryProfile4.jpg",
+      profilePicture: "../../../Images/StoryProfile4.jpg",
     },
     {
       id: 8,
       name: "Nicholas Runolfsdottir V",
       username: "Victoria",
       email: "Sherwood@rosamond.me",
-      profilePicture: "../../images/img/StoryProfile4.jpg",
+      profilePicture: "../../../Images/StoryProfile4.jpg",
     },
     {
       id: 9,
       name: "Catherine",
       username: "Maria",
       email: "Chaim_McDermott@dana.io",
-      profilePicture: "../../images/img/StoryProfile4.jpg",
+      profilePicture: "../../../Images/StoryProfile4.jpg",
     },
     {
       id: 10,
       name: "Clementina DuBuque",
       username: "Theresa",
       email: "Rey.Padberg@karina.biz",
-      profilePicture: "../../images/img/StoryProfile4.jpg",
+      profilePicture: "../../../Images/StoryProfile4.jpg",
     },
     {
       id: 11,
       name: "Sharon Mattew",
       username: "Charlotte",
       email: "Rey.Padberg@karina.biz",
-      profilePicture: "../../images/img/StoryProfile4.jpg",
+      profilePicture: "../../../Images/StoryProfile4.jpg",
     },
   ];
   
@@ -138,7 +138,7 @@ export const Users = [
       id: 1,
       title: "to make a blinded choice to reject or provident to task",
       body: "because he receives and accepts the accepted consequences unencumbered and when he finds the discomfort",
-      photo: "../../images/img/StoryProfile4.jpg",
+      photo: "../../../Images/StoryProfile4.jpg",
       date: "5 mins ago",
       like: "100",
       comment: "70",
@@ -148,7 +148,7 @@ export const Users = [
       id: 2,
       title: "who is to be",
       body: "it is the time of life to pursue the things that are to be blamed for the pain of a blessed one, nor avoid the pleasures of flattery.",
-      photo: "../../images/img/StoryProfile4.jpg",
+      photo: "../../../Images/StoryProfile4.jpg",
       date: "23 mins ago",
       like: "480",
       comment: "112",
@@ -249,7 +249,7 @@ export const Users = [
       id: 12,
       title: "at some time hate is pain",
       body: "so that's either great for the present because it hates them and it is pleasure and the wise because they love nothing, blinded because that pleasure is the distinction between hatred",
-      photo: "../../images/img/StoryProfile4.jpg",
+      photo: "../../../Images/StoryProfile4.jpg",
       date: "1 year ago",
       like: "760",
       comment: "500",

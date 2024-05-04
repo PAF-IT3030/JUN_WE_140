@@ -79,5 +79,6 @@
     flex-basis: 20%;
     position: relative;
     padding: 0px;
+    object-fit: cover;
     
 }

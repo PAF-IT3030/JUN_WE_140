@@ -1,4 +1,6 @@
 import { Notifications, Pets } from "@mui/icons-material";
+import Profile from "../Pages/ProfilePage";
+
 import {
   AppBar,
   Avatar,
@@ -88,7 +90,7 @@ const Navbar = () => {
           horizontal: "right",
         }}
       >
-        <MenuItem>Profile</MenuItem>
+        <MenuItem><a href="/Profile">Profile</a></MenuItem>
         <MenuItem>My account</MenuItem>
         <MenuItem>Logout</MenuItem>
       </Menu>

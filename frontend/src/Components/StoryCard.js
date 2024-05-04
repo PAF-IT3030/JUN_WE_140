@@ -1,5 +1,5 @@
 import React from 'react'
-import './StoryCard.css'
+import '../css/StoryCard.css'
 
 const StoryCard = ({ user }) => {
   return (

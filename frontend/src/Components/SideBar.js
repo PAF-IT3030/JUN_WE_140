@@ -26,7 +26,7 @@ import {
         <Box position="fixed">
           <List>
             <ListItem disablePadding>
-              <ListItemButton component="a" href="#home">
+              <ListItemButton component="a" href="/Home">
                 <ListItemIcon>
                   <Home />
                 </ListItemIcon>
@@ -60,7 +60,7 @@ import {
             </ListItem>
             
             <ListItem disablePadding>
-              <ListItemButton component="a" href="#simple-list">
+              <ListItemButton component="a" href="/Profile">
                 <ListItemIcon>
                   <AccountBox />
                 </ListItemIcon>

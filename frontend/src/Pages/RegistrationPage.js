@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../css/RegistrationPage.css';
-import PrimarySearchAppBar from "../Components/PrimarySearchAppBar";
 
-import Logo_jpg from '../images/logo.jpg'
-import FN_png from '../images/FN.png'
-import Age_png from '../images/Age.png'
-import EM_png from '../images/EM.png'
-import ps_png from '../images/ps.png'
+import Logo_jpg from '../Images/logo.jpg'
+import FN_png from '../Images/FN.png'
+import Age_png from '../Images/Age.png'
+import EM_png from '../Images/EM.png'
+import ps_png from '../Images/ps.png'
 
 export default function Register() {
   const navigate = useNavigate();
@@ -72,19 +71,18 @@ export default function Register() {
   };
 
   return (
-    <><PrimarySearchAppBar />
+
     <div className="container d-flex justify-content-center align-items-center">
       
         <div className="RCard" style={{width: "30rem"}}>
         <div className="row g-0  container d-flex justify-content-center align-items-center">
                     <div className="col-md-5">
                         <img src={Logo_jpg} className="img-fluid rounded-start" alt="Login" />
-                       {/* <img src={e_png} className="img-fluid rounded-start" style={{width: "5rem"}} alt="Login" />*/}
                     </div>
           
           <div className="col-md-8">
           <div className="card-body">
-          <h1 className="Rcard-title text-center mb-4">Registration</h1>
+          <h1 className="Rcard-title text-center mb-5">Registration</h1>
           <form onSubmit={handleSubmit}>
                 <div className="Rform-outline mb-3">
                   {/*<label htmlFor="firstName" className="form-label">
@@ -179,6 +177,5 @@ export default function Register() {
           </div>
         </div>
     </div>
-    </>
   );
 }

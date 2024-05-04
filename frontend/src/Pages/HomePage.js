@@ -1,6 +1,5 @@
 import React from "react";
-import { Box, Divider, Grid, Stack } from "@mui/material";
-import PrimarySearchAppBar from "../Components/PrimarySearchAppBar";
+import { Box, Divider, Stack } from "@mui/material";
 import SideBar from "../Components/SideBar";
 import Feed from "../Components/Feed";
 import RightSideBar from "../Components/RightSideBar";

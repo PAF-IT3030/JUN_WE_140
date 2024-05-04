@@ -1,15 +1,14 @@
 import React from 'react'
 import {useRef, useState } from 'react'
-import './Stories.css'
-import { Users } from '../../Pages/Data'
-import Storycard from '../StoryCard/StoryCard';
-import StoryProfile2 from '../../images/img/StoryProfile2.jpg'
+import '../css/Stories.css'
+import { Users } from '../Utils/Data/Data'
+import Storycard from './StoryCard';
 
-import StoryProfile8 from "../img/StoryProfile8.png";
-import plusIconB from "../img/plusIconB.png";
-import story8 from "../img/story8.jpg";
-import StoryProfile3 from "../img/StoryProfile3.jpg";
-import StoryProfile4 from "../img/StoryProfile4.jpg";
+
+import StoryProfile8 from "../Images/StoryProfile8.png";
+import plusIconB from "../Images/plusIconB.png";
+import story8 from "../Images/story8.jpg";
+
 
 
 function Stories() {
@@ -37,7 +36,7 @@ function Stories() {
       </div>
 
       <img src={StoryProfile8} alt="User Story" className="sstoryProfile" />
-      <img src={story8} className="img-fluid rounded-start" style={{width: "11rem"}} alt="Login" />
+      {/*<img src={story8} className="img-fluid rounded-start" style={{width: "11rem"}} alt="Login" />*/}
 
       
 

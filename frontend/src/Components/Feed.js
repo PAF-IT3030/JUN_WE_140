@@ -9,6 +9,7 @@ import {
 import React, { useState } from "react";
 import Post from "./Post";
 import PostDialogForm from "./PostDialogForm";
+import Stories from "./Stories"
 import { AddBox } from "@mui/icons-material";
 
 function Feed() {
@@ -30,6 +31,9 @@ function Feed() {
 
   return (
     <Box flex={4} p={{ xs: 0, md: 2 }}>
+      <Box>
+        <Stories/>
+      </Box>
       <Box>
         <TextField
           onClick={handleOpenDialog}
