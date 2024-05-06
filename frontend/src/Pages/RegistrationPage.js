@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../css/RegistrationPage.css';
 
-import Logo_jpg from '../Images/logo.jpg'
+import Logo_jpg from '../Images/logo.png'
 import FN_png from '../Images/FN.png'
 import Age_png from '../Images/Age.png'
 import EM_png from '../Images/EM.png'
@@ -71,13 +71,13 @@ export default function Register() {
   };
 
   return (
-
+<div className='Rbody'>
     <div className="container d-flex justify-content-center align-items-center">
       
         <div className="RCard" style={{width: "30rem"}}>
         <div className="row g-0  container d-flex justify-content-center align-items-center">
-                    <div className="col-md-5">
-                        <img src={Logo_jpg} className="img-fluid rounded-start" alt="Login" />
+                    <div className="col-md-5 mb-3">
+                        <img src={Logo_jpg} className="logo img-fluid rounded-start" alt="Login" />
                     </div>
           
           <div className="col-md-8">
@@ -177,5 +177,6 @@ export default function Register() {
           </div>
         </div>
     </div>
+  </div>  
   );
 }

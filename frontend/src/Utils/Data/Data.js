@@ -3,12 +3,13 @@ import StoryProfile3 from '../../Images/StoryProfile3.jpg'
 import StoryProfile4 from '../../Images/StoryProfile4.jpg'
 import StoryProfile5 from '../../Images/StoryProfile5.jpg'
 import StoryProfile6 from '../../Images/StoryProfile6.jpg'
+import StoryProfile7 from '../../Images/StoryProfile7.jpg'
 
-import story2 from '../../Images/story2.jpg'
-import story3 from '../../Images/story3.jpg'
-import story4 from '../../Images/story4.jpg'
-import story5 from '../../Images/story5.jpg'
-import story6 from '../../Images/story6.jpg'
+import story2 from '../../Images/s1.jpg'
+import story3 from '../../Images/s2.jpg'
+import story4 from '../../Images/s3.jpg'
+import story5 from '../../Images/s4.jpg'
+import story6 from '../../Images/s5.jpg'
 
 export const Users = [
     {
@@ -25,7 +26,7 @@ export const Users = [
       username: "isabel_23",
       email: "isabella@randy.biz",
       Story: story3,
-      profilePicture: StoryProfile3
+      profilePicture: StoryProfile7
     },
     {
       id: 3,
