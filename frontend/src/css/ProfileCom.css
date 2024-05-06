@@ -147,6 +147,16 @@
     color: rgb(0, 92, 128);
 }
 
+.editIcon{
+    position: absolute;
+    left: 43%;
+    color: #0047a3;
+    width: 35px;
+    transform: translateX(-50%);
+    cursor: pointer;
+    border: 3px solid #ffffff;;
+}
+
 .age{
     position: absolute;
     top: 745px;
@@ -154,7 +164,7 @@
     justify-content: center;
     align-items: center;
     font-size: 1.6em;
-    width: 40px;
+    width: 43px;
     padding: 2px 3px;
     margin: 5px;
 }

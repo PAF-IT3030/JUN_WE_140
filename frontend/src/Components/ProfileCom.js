@@ -9,11 +9,12 @@ import plusIconB from "../Images/plusIconB.png";
 import story8 from "../Images/story8.jpg";
 import { Box } from '@mui/material';
 import ProfilePic from './ProfilePic';
-import age from '../Images/Age3.png'
-import weight from '../Images/Weight3.png'
-import height from '../Images/Height7.png'
-import email from '../Images/email1.png'
-import phone from '../Images/phone1.png'
+import editIcon from '../Images/Reg.png';
+import age from '../Images/Age2.png'
+import weight from '../Images/Weight.png'
+import height from '../Images/Height.png'
+import email from '../Images/email.png'
+import phone from '../Images/phone.png'
 import Post from './Post';
 
 
@@ -53,6 +54,7 @@ function ProfileCom() {
     <Box className="Flex">
     <div className="IPCard">
         <div className="">
+          <img src={editIcon} className="editIcon"  alt="" /> 
           <h1 className="IPcard-title">Yugantha Polhengoda</h1>
         </div>
         <form onSubmit={{/*handleSubmit*/}}>
