@@ -47,58 +47,7 @@ const Post = () => {
       },
     ],
   };
-  const dummyData = [
-    {
-      id: 0,
-      name: "Jhon",
-      date: "September 14, 2022",
-      description:
-        "Hey everyone! 💪 Just crushed a killer full-body workout! Started with a 10-minute dynamic warm-up to get the blood flowing, then hit three rounds of circuits:Squats, push-ups, and bent-over rows for strength.Jumping jacks, mountain climbers, and burpees for cardio.Plank holds, Russian twists, and bicycle crunches for core work.Finished off with a 5-minute cool-down and stretch. Feeling the burn in all the right places! Who's joining me next time? #WorkoutMotivation #FitnessGoals",
-      image: workoutImg,
-      comments: [
-        {
-          commentId: "1",
-          username: "Alice",
-          description:
-            "Great workout, Jhon! 💪 I'll definitely join you next time! #FitnessGoals",
-          time: "September 14, 2022, 10:30 AM",
-        },
-        {
-          commentId: "2",
-          username: "Michael",
-          description: "Sounds intense! 💪 Way to go, Jhon!",
-          time: "September 14, 2022, 11:15 AM",
-        },
-      ],
-    },
-    {
-      id: 1,
-      name: "Alice",
-      date: "October 3, 2022",
-      description:
-        "Good morning! 🌞 Started my day with a refreshing run in the park. The crisp air and morning dew made it extra invigorating! Now, time for a hearty breakfast before tackling the day ahead. Wishing everyone a fantastic day ahead! #MorningRun #FreshStart",
-      image:
-        "https://images.pexels.com/photos/414029/pexels-photo-414029.jpeg?cs=srgb&dl=pexels-pixabay-414029.jpg&fm=jpg",
-      comments: [
-        {
-          commentId: "3",
-          username: "Alice",
-          description:
-            "Great workout, Jhon! 💪 I'll definitely join you next time! #FitnessGoals",
-          time: "September 14, 2022, 10:30 AM",
-        },
-        {
-          commentId: "4",
-          username: "Michael",
-          description: "Sounds intense! 💪 Way to go, Jhon!",
-          time: "September 14, 2022, 11:15 AM",
-        },
-      ],
-    },
-    // Add more dummy data as needed
-  ];
 
-  const [post, setPost] = useState(dummyData);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedComment, setSelectedComment] = useState(null);
   const [posts, setPosts] = useState(null);
@@ -146,7 +95,7 @@ const Post = () => {
 
   const handleCloseDialog = async () => {
     setOpenDialog(false);
-    console.log(selectedComment?.commentId,"commmetttttttttttttttttt",newComment)
+  
     try {
       if (selectedComment && selectedComment.commentId) {
         // If selectedComment is not null, it means we are updating an existing comment
