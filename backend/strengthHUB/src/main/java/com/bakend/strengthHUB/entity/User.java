@@ -1,12 +1,11 @@
 package com.bakend.strengthHUB.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,4 +20,11 @@ public class User {
     private Integer age;
     private String email;
     private String password;
+    @ElementCollection
+    private List<Integer> followers;
+
+    @ElementCollection
+    private List<Integer> followings;
+
+
 }

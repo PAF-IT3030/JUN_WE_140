@@ -1,9 +1,11 @@
 package com.bakend.strengthHUB.dto;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -14,5 +16,7 @@ public class UserDTO {
     private Integer age;
     private String email;
     private String password;
+    private List<Integer> followers;
+    private List<Integer> followings;
 
 }

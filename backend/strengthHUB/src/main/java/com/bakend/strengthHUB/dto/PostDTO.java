@@ -19,6 +19,7 @@ public class PostDTO {
     private String userId;
     private String title;
     private String description;
-    private String filePath;
+    private String image;
+    private String video;
     private Date createdAt;
 }

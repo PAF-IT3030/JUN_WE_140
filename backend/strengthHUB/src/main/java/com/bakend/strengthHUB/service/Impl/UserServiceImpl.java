@@ -25,13 +25,21 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userDTO.getEmail());
         user.setAge(userDTO.getAge());
         user.setPassword(userDTO.getPassword());
+        user.setFollowers(userDTO.getFollowers());
+        user.setFollowings(userDTO.getFollowings());
 
         return userRepository.save(user);
     }
 
     @Override
-    public User getUserById(Integer id) {
-        return userRepository.findById(id).orElse(null);
+    public User getUserById(Integer id) throws Exception {
+
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()){
+            return user.get();
+        }
+
+        throw new Exception("User not exist with userid "+id);
     }
 
     @Override
@@ -41,6 +49,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUser(Integer id, UserDTO userDTO) {
+
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
@@ -49,6 +58,8 @@ public class UserServiceImpl implements UserService {
             user.setAge(userDTO.getAge());
             user.setEmail(userDTO.getEmail());
             user.setPassword(userDTO.getPassword());
+            user.setFollowers(userDTO.getFollowers());
+            user.setFollowings(userDTO.getFollowings());
             return userRepository.save(user);
         }
         return null;
@@ -63,5 +74,19 @@ public class UserServiceImpl implements UserService {
         } else {
             return "User not found";
         }
+    }
+
+    public User followUser(Integer userId1,Integer userId2) throws Exception {
+        User user1 = getUserById(userId1);
+        User user2 = getUserById(userId2);
+
+        user2.getFollowers().add(user1.getId());
+        user1.getFollowings().add(user2.getId());
+
+        userRepository.save(user1);
+        userRepository.save(user2);
+
+        return user1;
+
     }
 }
