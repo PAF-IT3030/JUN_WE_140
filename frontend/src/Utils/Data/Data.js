@@ -1,5 +1,4 @@
 import StoryProfile2 from '../../Images/StoryProfile2.jpg'
-import StoryProfile3 from '../../Images/StoryProfile3.jpg'
 import StoryProfile4 from '../../Images/StoryProfile4.jpg'
 import StoryProfile5 from '../../Images/StoryProfile5.jpg'
 import StoryProfile6 from '../../Images/StoryProfile6.jpg'

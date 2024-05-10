@@ -1,3 +1,10 @@
+.box {
+    margin-bottom: 70px;
+    border-radius: 10px;
+    -webkit-box-shadow: 2px 4px 10px 1px rgba(0,0,0,0.47);
+    box-shadow: 0px 4px 10px 0px rgba(201,201,201,0.47);
+}
+
 .BIstories{
     display: flex;
     width: 80%;
@@ -25,7 +32,7 @@
     flex-basis: 100%;
     margin: 8px;
     position: relative;
-    height: 28rem;
+    height: 25rem;
 }
 
 .BIstoryadd{
@@ -46,26 +53,18 @@
     position: relative;
     padding: 0px;
     width: 63.2rem;
-    height: 28rem;
+    height: 25rem;
     object-fit: cover;
     border-radius: 10px;
-}
-
-.BIBackground {
-    width: 11rem;
-}
-
-.BIBackground ::after{
-    display: none;
 }
 
 .PIstoryProfile{
     display: flex;
     position: absolute;
-    height: 320px;
-    width: 320px;
+    height: 305px;
+    width: 305px;
     border-radius: 50%;
-    top: 255px;
+    top: 220px;
     left: 20px;
     border: 3px solid #0064e8;
     object-fit: cover;
@@ -88,8 +87,8 @@
 .PISetImage {
     display: flex;
     position: absolute;
-    height: 315px;
-    width: 315px;
+    height: 300px;
+    width: 300px;
     border-radius: 50%;
     left: 0px;
     object-fit: cover;
@@ -98,28 +97,43 @@
 
 
 
-.IPCard {
-    margin-top: 30px;
+/*.IPCard {
+    margin-top: 13px;
     border-radius: 40px 40px 40px 40px;
     box-shadow: 0px 30px 50px 0 rgba(0,0,0,0.3);
-    padding: 30px;
+    padding: 22px;
     margin-left: 30px;
-    width: 35rem;
+    width: 34rem;
     background-color: #fff;
-}
+}*/
 
 .IPcard-title {
     font-size: 30px;
+    margin-left: 145px;
     font-weight: bold;
     text-align: center;
-    margin-top: 40px;
+    margin-top: 100px;
     color: rgb(0, 92, 128);
+}
+
+.followCount {
+    margin-left: 148px;
+}
+
+.followCount span {
+    margin-left: 19px;
+    color: #716c6c;
+    font-weight: 400;
+}
+
+.hr {
+    margin-left: 100px;
 }
 
 .IPform-outline {
     font-size: 20px;
     margin: 25px;
-    margin-top: 45px;
+    margin-top: 33px;
     font-weight: 300;
 }
 
@@ -127,17 +141,8 @@
     display: flex;
 }
 
-.MealPlan {
-    margin-left: 250px;
-    margin-top: 97px;
-}
-
-.MealPlanTitle {
-    font-weight: 400;
-}
-
 .label {
-    margin-left: 56px;
+    margin-left: 70px;
     font-weight: 500;
 }
 
@@ -148,18 +153,14 @@
 }
 
 .editIcon{
-    position: absolute;
-    left: 43%;
-    color: #0047a3;
-    width: 35px;
-    transform: translateX(-50%);
     cursor: pointer;
-    border: 3px solid #ffffff;;
+    margin-left: 5px;
+    color: #000;
 }
 
 .age{
     position: absolute;
-    top: 745px;
+    top: 731px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -167,33 +168,49 @@
     width: 43px;
     padding: 2px 3px;
     margin: 5px;
+    margin-left: 20px;
 }
 
 .weight{
     position: absolute;
-    top: 818px;
+    top: 796px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 1.6em;
     width: 52px;
     padding: 1px 2px;
+    margin-left: 16px;
 }
 
 .height{
     position: absolute;
-    top: 896px;
+    top: 859px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 1.6em;
     width: 50px;
     padding: 1px 2px;
+    margin-left: 16px;
 }
 
 .email{
     position: absolute;
-    top: 969px;
+    top: 921px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.6em;
+    width: 42px;
+    padding: 2px 3px;
+    margin: 6px;
+    margin-left: 18px;
+}
+
+.phone{
+    position: absolute;
+    top: 984px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -201,21 +218,44 @@
     width: 40px;
     padding: 2px 3px;
     margin: 6px;
+    margin-left: 18px;
 }
 
-.phone{
-    position: absolute;
-    top: 1042px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.6em;
-    width: 40px;
-    padding: 2px 3px;
-    margin: 8px;
+.Tabs {
+    margin-top: 40px;
+    margin-left: 100px;
+    font-weight: bold;
 }
 
-.post {
-   /* margin-top: 100px;*/
+/*.age-icon {
+    width: 35px;
+    padding-bottom: 5px;
+    margin-left: 5px;
 }
+
+.weight-icon {
+    width: 48px;
+    padding-bottom: 5px;
+}
+
+.height-icon {
+    width: 45px;
+    padding-bottom: 5px;
+    margin-left: 2px;
+}
+
+.email-icon {
+    width: 35px;
+    padding-bottom: 5px;
+    margin-left: 10px;
+}
+
+.phone-icon {
+    width: 35px;
+    padding-bottom: 5px;
+    margin-left: 10px;
+}
+/*.post {
+   margin-top: 100px;
+}*/
 

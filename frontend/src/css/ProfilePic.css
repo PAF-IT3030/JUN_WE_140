@@ -1,0 +1,39 @@
+.selected-image{
+    display: flex;
+    position: absolute;
+    height: 300px;
+    width: 300px;
+    border-radius: 50%;
+    left: 0px;
+    object-fit: cover;
+}
+
+.PIstoryadd{
+    position: absolute;
+    left: 930%;
+    top: 1400%;
+    color: #0047a3;
+    width: 50px;
+    bottom: 15px;
+    transform: translateX(-50%);
+    cursor: pointer;
+    border: 3px solid #ffffff;;
+    border-radius: 50%;
+}
+
+.PIstoryProfile{
+    display: flex;
+    position: absolute;
+    height: 305px;
+    width: 305px;
+    border-radius: 50%;
+    top: 220px;
+    left: 20px;
+    border: 3px solid #0064e8;
+    object-fit: cover;
+    background-color: rgb(89, 88, 88);
+    
+}
+
+/*left: 930%;
+    top: 1400%;*/

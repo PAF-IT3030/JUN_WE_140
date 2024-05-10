@@ -1,0 +1,1274 @@
+return (
+      <>
+        <Formik
+        onSubmit={handleSubmit}
+        initialValues={initialValues}
+        >
+
+        {({ handleSubmit }) => (
+
+            <div className='Rbody'>
+              <div className="container d-flex justify-content-center align-items-center">
+                
+                  <div className="RCard" style={{width: "30rem"}}>
+                  <div className="row g-0  container d-flex justify-content-center align-items-center">
+                              <div className="col-md-5 mb-3">
+                                  <img src={Logo_jpg} className="logo img-fluid rounded-start" alt="Login" />
+                              </div>
+                    
+                    <div className="col-md-8">
+                    <div className="card-body">
+                    <h1 className="Rcard-title text-center mb-5">Registration</h1>
+                    
+                        <form onSubmit={handleSubmit}>
+                              <div className="Rform-outline">
+                                {/*<label htmlFor="firstName" className="form-label">
+                                  First Name
+                                  </label>*/}
+                                <Field type="text" name="firstName" className="control mb-3" placeholder="First Name" required />
+                                <img src={FN_png} className="img-fluid rounded-start"  alt="Login" />
+                              </div>
+                              <div className="Rform-outline2">
+                                {/*<label htmlFor="lastName" className="form-label">
+                                  Last Name
+                                  </label>*/}
+                                 <Field type="text" name="lastName" className="control mb-3" placeholder="Last Name" required />
+                                <img src={FN_png} className="img-fluid rounded-start"  alt="Login" />
+                              </div>
+
+                            
+                              <div className="Rform-outline3">
+                                {/*<label htmlFor="age" className="form-label">
+                                  Age
+                                </label>*/}
+                                <Field type="number" name="age" className="control mb-3" placeholder="Age" required />
+                                <img src={Age_png} className="img-fluid rounded-start"  alt="Login" />
+                              </div>
+                              {/*<div className="col">
+                                <label htmlFor="dob" className="form-label">
+                                  Entered date:
+                                </label>
+                                <input
+                                  type="date"
+                                  className="form-control"
+                                  id="dob"
+                                  onChange={(e) => setDob(e.target.value)}
+                                  required
+                                />
+                              </div>*/}
+                            <div className="Rform-outline4">
+                                      {/*<label for="email" class="form-label">Email</label>*/}
+                                      <Field type="email" name="email" className="control mb-3" placeholder="Email" required />
+                                      <img src={EM_png} className="img-fluid rounded-start"  alt="Login" />
+                                  </div>
+                            <div className="Rform-outline5">
+                                      {/*<label for="password" class="form-label">Password</label>*/}
+                                      <Field type="password" name="password" className="control mb-3" placeholder="Password" required />
+                                      <img src={ps_png} className="img-fluid rounded-start"  alt="Login" />
+                                  </div>
+
+                                  <div className="Rform-outline6 mb-2">
+                                      {/*<label for="password" class="form-label">Password</label>*/}
+                                      <Field type="password" name="confirmPassword" className="control mb-3" placeholder="Confirm Password" required />
+                                      <img src={ps_png} className="img-fluid rounded-start"  alt="Login" />
+                                  </div>
+                                  {/*{error && <div className="alert alert-danger">{error}</div>}*/}
+                          
+
+                            {/* ... other form fields ... */}
+
+                            <div className="mb-4 d-grid gap-2 container d-flex justify-content-center align-items-center">
+                              <button type="submit" className="btn btn-secondary" style={{width: "8rem"}}>
+                                Submit
+                              </button>
+                            </div>
+                            <div className="text-center">
+                              <span>
+                                Already have an account? <Link to="/">Login</Link>
+                              </span>
+                            </div>
+                          </form>
+                    </div>
+                    </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+        )}
+        </Formik> 
+      </> 
+  );
+}
+
+
+
+
+
+
+
+
+
+
+update
+
+
+
+
+
+import React, { useRef, useState, useEffect } from 'react';
+import axios from 'axios';
+import '../css/ProfileCom.css'
+import EditIcon from "@mui/icons-material/Edit";
+import { Box } from '@mui/material';
+import age from '../Images/Age2.png'
+import email from '../Images/email.png'
+
+function ProfileCom() {
+  const [users, setUsers] = useState(null);
+  const [editing, setEditing] = useState(false);
+  const [updatedUser, setUpdatedUser] = useState({
+    firstname: '',
+    lastname: '',
+    age: '',
+    email: '',
+  });
+
+  useEffect(() => {
+    // Fetch user data from API
+    axios.get('http://localhost:8080/api/users/19')
+      .then(response => {
+        setUsers(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching user data:', error);
+      });
+  }, []); 
+
+  const handleEdit = () => {
+    setEditing(true);
+    setUpdatedUser({
+      firstname: users.firstname,
+      lastname: users.lastname,
+      age: users.age,
+      email: users.email,
+    });
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUpdatedUser(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Make API call to update user data
+    axios.put(`http://localhost:8080/api/users/${users.id}`, updatedUser)
+      .then(response => {
+        setUsers(response.data);
+        setEditing(false);
+      })
+      .catch(error => {
+        console.error('Error updating user data:', error);
+      });
+  };
+
+  return (
+    <>
+      <Box className="box" flex={4} p={{ xs: 0, md: 2 }}>
+        <Box className="Flex">
+          <div className="IPCard">
+            <div className="">
+              <h1 className="IPcard-title">
+                {users ? `${users.firstname} ${users.lastname}` : 'Loading...'}
+                <EditIcon className='editIcon' onClick={handleEdit} />
+              </h1>
+              <form onSubmit={handleSubmit}>
+                <hr className='hr' />
+                <div className="IPform-outline">
+                  <img src={age} className="age" alt="" />
+                  <label htmlFor="age" className="label">
+                    Age :
+                    <input
+                      type="text"
+                      id="age"
+                      name="age"
+                      value={updatedUser.age}
+                      onChange={handleInputChange}
+                      disabled={!editing}
+                    />
+                  </label>
+                </div>
+
+                <div className="IPform-outline">
+                  <img src={email} className="email" alt="" />
+                  <label htmlFor="email" className="label">
+                    Email :
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={updatedUser.email}
+                      onChange={handleInputChange}
+                      disabled={!editing}
+                    />
+                  </label>
+                </div>
+                {editing && (
+                  <button type="submit">Save</button>
+                )}
+              </form>
+            </div>
+          </div>
+        </Box>
+      </Box>
+    </>
+  )
+}
+
+export default ProfileCom;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+user.java
+package com.bakend.strengthHUB.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Data
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String firstname;
+    private String lastname;
+    private Integer age;
+    private String email;
+    private String password;
+    @ElementCollection
+    private List<Integer> followers;
+
+    @ElementCollection
+    private List<Integer> followings;
+
+
+}
+
+
+UserService.java
+package com.bakend.strengthHUB.service;
+
+import com.bakend.strengthHUB.dto.UserDTO;
+import com.bakend.strengthHUB.entity.User;
+
+import java.util.List;
+
+public interface UserService {
+    User createUser(UserDTO user);
+    User getUserById(Integer id) throws Exception;
+
+    List<User> getAllUsers();
+
+    User updateUser(Integer id, UserDTO userDTO);
+
+    String deleteUser(Integer id);
+    User followUser(Integer userId1,Integer userId2) throws Exception;
+
+
+}
+
+
+
+
+UserServiceImpl.java
+package com.bakend.strengthHUB.service.Impl;
+
+import com.bakend.strengthHUB.dto.UserDTO;
+import com.bakend.strengthHUB.entity.User;
+import com.bakend.strengthHUB.repo.UserRepository;
+import com.bakend.strengthHUB.service.UserService;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+@Transactional
+public class UserServiceImpl implements UserService {
+
+    @Autowired
+    UserRepository userRepository;
+    @Override
+    public User createUser(UserDTO userDTO) {
+        User user = new User();
+        user.setFirstname(userDTO.getFirstname());
+        user.setLastname(userDTO.getLastname());
+        user.setEmail(userDTO.getEmail());
+        user.setAge(userDTO.getAge());
+        user.setPassword(userDTO.getPassword());
+        user.setFollowers(userDTO.getFollowers());
+        user.setFollowings(userDTO.getFollowings());
+
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User getUserById(Integer id) throws Exception {
+
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()){
+            return user.get();
+        }
+
+        throw new Exception("User not exist with userid "+id);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public User updateUser(Integer id, UserDTO userDTO) {
+
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setFirstname(userDTO.getFirstname());
+            user.setLastname(userDTO.getLastname());
+            user.setAge(userDTO.getAge());
+            user.setEmail(userDTO.getEmail());
+            user.setPassword(userDTO.getPassword());
+            user.setFollowers(userDTO.getFollowers());
+            user.setFollowings(userDTO.getFollowings());
+            return userRepository.save(user);
+        }
+        return null;
+    }
+
+    @Override
+    public String deleteUser(Integer id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            userRepository.deleteById(id);
+            return "User deleted successfully";
+        } else {
+            return "User not found";
+        }
+    }
+
+    public User followUser(Integer userId1,Integer userId2) throws Exception {
+        User user1 = getUserById(userId1);
+        User user2 = getUserById(userId2);
+
+        user2.getFollowers().add(user1.getId());
+        user1.getFollowings().add(user2.getId());
+
+        userRepository.save(user1);
+        userRepository.save(user2);
+
+        return user1;
+
+    }
+}
+
+
+UserRepository.java
+package com.bakend.strengthHUB.repo;
+
+import com.bakend.strengthHUB.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User,Integer> {
+
+}
+
+
+
+UserDTO.java
+package com.bakend.strengthHUB.dto;
+
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserDTO {
+    private String firstname;
+    private String lastname;
+    private Integer age;
+    private String email;
+    private String password;
+    private List<Integer> followers;
+    private List<Integer> followings;
+
+}
+
+
+UserController.java
+package com.bakend.strengthHUB.controller;
+
+import com.bakend.strengthHUB.dto.UserDTO;
+import com.bakend.strengthHUB.entity.User;
+import com.bakend.strengthHUB.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+
+@RestController
+@RequestMapping("/api/users")
+public class UserController {
+
+    @Autowired
+    UserService userService;
+
+    @PostMapping("/")
+    public User createUser(@RequestBody UserDTO userDTO) {
+        return userService.createUser(userDTO);
+    }
+
+    @GetMapping("/{id}")
+    public User getUserById(@PathVariable Integer id) throws Exception {
+        return userService.getUserById(id);
+    }
+    @GetMapping("/")
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
+    }
+
+    @PutMapping("/{id}")
+    public User updateUser(@PathVariable Integer id, @RequestBody UserDTO userDTO) {
+        return userService.updateUser(id, userDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Integer id) {
+        userService.deleteUser(id);
+    }
+
+    @PutMapping("/follow/{userId1}/{userId2}")
+    public User followUserHandler(@PathVariable Integer userId1,@PathVariable Integer userId2) throws Exception {
+        User user = userService.followUser(userId1,userId2);
+        return user;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { useState } from 'react';
+import './App.css';
+
+function App() {
+  const [profilePicture, setProfilePicture] = useState(null);
+  const [backgroundImage, setBackgroundImage] = useState(null);
+
+  const handleProfilePictureChange = (event) => {
+    const file = event.target.files[0];
+    setProfilePicture(file);
+  };
+
+  const handleBackgroundImageChange = (event) => {
+    const file = event.target.files[0];
+    setBackgroundImage(file);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // Implement logic to upload files to your backend
+    // Example using FormData:
+
+    const formData = new FormData();
+    formData.append('profilePicture', profilePicture);
+    formData.append('backgroundImage', backgroundImage);
+
+    // Replace with your backend API endpoint
+    const response = await fetch('/api/uploadImages', {
+      method: 'POST',
+      body: formData,
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      alert('Images uploaded successfully!');
+      // Reset state after successful upload
+      setProfilePicture(null);
+      setBackgroundImage(null);
+    } else {
+      alert('Error uploading images!');
+    }
+  };
+
+  return (
+    <div className="App">
+      <h1>Profile Uploader</h1>
+      <form onSubmit={handleSubmit}>
+        <div className="image-upload">
+          <label htmlFor="profile-picture">Profile Picture</label>
+          <input
+            type="file"
+            id="profile-picture"
+            accept="image/*"
+            onChange={handleProfilePictureChange}
+          />
+          {profilePicture && <img src={URL.createObjectURL(profilePicture)} alt="Profile Preview" />}
+        </div>
+        <div className="image-upload">
+          <label htmlFor="background-image">Background Image</label>
+          <input
+            type="file"
+            id="background-image"
+            accept="image/*"
+            onChange={handleBackgroundImageChange}
+          />
+          {backgroundImage && <img src={URL.createObjectURL(backgroundImage)} alt="Background Preview" />}
+        </div>
+        <button type="submit">Save Changes</button>
+      </form>
+    </div>
+  );
+}
+
+export default App;
+
+
+
+
+
+
+
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.image-upload {
+  margin-bottom: 10px;
+}
+
+.image-upload img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  margin-bottom: 5px;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #333;
+  color: #fff;
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+package com.bakend.strengthHUB.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Data
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String firstname;
+    private String lastname;
+    private Integer age;
+    private Double weight;
+    private Double height; 
+    private String email;
+    private String phoneNo;
+    private String password;
+    @Column(nullable = true)
+    private String profilePicture;
+    @Column(nullable = true)
+    private String backgroundImage;
+    @ElementCollection
+    private List<Integer> followers;
+
+    @ElementCollection
+    private List<Integer> followings;
+
+
+}
+
+
+
+
+package com.bakend.strengthHUB.dto;
+
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserDTO {
+    private String firstname;
+    private String lastname;
+    private Integer age;
+    private Double weight;
+    private Double height;
+    private String email;
+    private String phoneNo;
+    private String password;
+    private String profilePicture;
+    private String backgroundImage;
+    private List<Integer> followers;
+    private List<Integer> followings;
+
+}
+
+
+
+package com.bakend.strengthHUB.controller;
+
+import com.bakend.strengthHUB.dto.UserDTO;
+import com.bakend.strengthHUB.entity.User;
+import com.bakend.strengthHUB.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+
+@RestController
+@RequestMapping("/api/users")
+public class UserController {
+
+    @Autowired
+    UserService userService;
+
+    @PostMapping("/")
+    public User createUser(@RequestBody UserDTO userDTO) {
+        return userService.createUser(userDTO);
+    }
+
+    @GetMapping("/{id}")
+    public User getUserById(@PathVariable Integer id) throws Exception {
+        return userService.getUserById(id);
+    }
+    @GetMapping("/")
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
+    }
+
+    @PutMapping("/{id}")
+    public User updateUser(@PathVariable Integer id, @RequestBody UserDTO userDTO) {
+        return userService.updateUser(id, userDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Integer id) {
+        userService.deleteUser(id);
+    }
+
+    @PutMapping("/follow/{userId1}/{userId2}")
+    public User followUserHandler(@PathVariable Integer userId1,@PathVariable Integer userId2) throws Exception {
+        User user = userService.followUser(userId1,userId2);
+        return user;
+    }
+
+    @PutMapping("/{id}/profilePicture")
+    public User updateProfilePicture(@PathVariable Integer id, @RequestBody String profilePictureUrl) {
+        return userService.updateProfilePicture(id, profilePictureUrl);
+    }
+
+    @PutMapping("/{id}/backgroundImage")
+    public User updateBackgroundImage(@PathVariable Integer id, @RequestBody String backgroundImageUrl) {
+        return userService.updateBackgroundImage(id, backgroundImageUrl);
+    }
+}
+
+
+
+package com.bakend.strengthHUB.service.Impl;
+
+import com.bakend.strengthHUB.dto.UserDTO;
+import com.bakend.strengthHUB.entity.User;
+import com.bakend.strengthHUB.repo.UserRepository;
+import com.bakend.strengthHUB.service.UserService;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+@Transactional
+public class UserServiceImpl implements UserService {
+
+    @Autowired
+    UserRepository userRepository;
+    @Override
+    public User createUser(UserDTO userDTO) {
+        User user = new User();
+        user.setFirstname(userDTO.getFirstname());
+        user.setLastname(userDTO.getLastname());
+        user.setAge(userDTO.getAge());
+        user.setWeight(userDTO.getWeight());
+        user.setHeight(userDTO.getHeight());        
+        user.setEmail(userDTO.getEmail());
+        user.setPhoneNo(userDTO.getPhoneNo());
+        user.setPassword(userDTO.getPassword());
+        user.setFollowers(userDTO.getFollowers());
+        user.setFollowings(userDTO.getFollowings());
+
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User getUserById(Integer id) throws Exception {
+
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()){
+            return user.get();
+        }
+
+        throw new Exception("User not exist with userid "+id);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public User updateUser(Integer id, UserDTO userDTO) {
+
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setFirstname(userDTO.getFirstname());
+            user.setLastname(userDTO.getLastname());
+            user.setAge(userDTO.getAge());
+            user.setWeight(userDTO.getWeight());
+            user.setHeight(userDTO.getHeight());
+            user.setEmail(userDTO.getEmail());
+            user.setPhoneNo(userDTO.getPhoneNo());
+            user.setPassword(userDTO.getPassword());
+            user.setFollowers(userDTO.getFollowers());
+            user.setFollowings(userDTO.getFollowings());
+            return userRepository.save(user);
+        }
+        return null;
+    }
+
+    @Override
+    public String deleteUser(Integer id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            userRepository.deleteById(id);
+            return "User deleted successfully";
+        } else {
+            return "User not found";
+        }
+    }
+
+    @Override
+    public User updateProfilePicture(Integer id, String profilePictureUrl) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setProfilePicture(profilePictureUrl);
+            return userRepository.save(user);
+        }
+        return null;
+    }
+  
+    @Override
+    public User updateBackgroundImage(Integer id, String backgroundImageUrl) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setBackgroundImage(backgroundImageUrl);
+            return userRepository.save(user);
+        }
+        return null;
+    }
+    
+
+    public User followUser(Integer userId1,Integer userId2) throws Exception {
+        User user1 = getUserById(userId1);
+        User user2 = getUserById(userId2);
+
+        user2.getFollowers().add(user1.getId());
+        user1.getFollowings().add(user2.getId());
+
+        userRepository.save(user1);
+        userRepository.save(user2);
+
+        return user1;
+
+    }
+}
+
+
+
+
+package com.bakend.strengthHUB.service;
+
+import com.bakend.strengthHUB.dto.UserDTO;
+import com.bakend.strengthHUB.entity.User;
+
+import java.util.List;
+
+public interface UserService {
+    User createUser(UserDTO user);
+    User getUserById(Integer id) throws Exception;
+
+    List<User> getAllUsers();
+
+    User updateUser(Integer id, UserDTO userDTO);
+
+    String deleteUser(Integer id);
+    User followUser(Integer userId1,Integer userId2) throws Exception;
+
+    User updateProfilePicture(Integer id, String profilePictureUrl);
+
+    User updateBackgroundImage(Integer id, String backgroundImageUrl);
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+package com.bakend.strengthHUB.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Data
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String firstname;
+    private String lastname;
+    private Integer age;
+    private Double weight;
+    private Double height; 
+    private String email;
+    private String phoneNo;
+    private String password;
+    private byte[] profilePicture;
+    @ElementCollection
+    private List<Integer> followers;
+
+    @ElementCollection
+    private List<Integer> followings;
+
+
+}
+
+package com.bakend.strengthHUB.dto;
+
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserDTO {
+    private String firstname;
+    private String lastname;
+    private Integer age;
+    private Double weight;
+    private Double height;
+    private String email;
+    private String phoneNo;
+    private String password;
+    private byte[] profilePicture;
+    private List<Integer> followers;
+    private List<Integer> followings;
+
+}
+
+
+package com.bakend.strengthHUB.controller;
+
+import com.bakend.strengthHUB.dto.UserDTO;
+import com.bakend.strengthHUB.entity.User;
+import com.bakend.strengthHUB.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.List;
+
+
+@RestController
+@RequestMapping("/api/users")
+public class UserController {
+
+    @Autowired
+    UserService userService;
+
+    @PostMapping("/")
+    public User createUser(@RequestBody UserDTO userDTO) {
+        return userService.createUser(userDTO);
+    }
+
+    @GetMapping("/{id}")
+    public User getUserById(@PathVariable Integer id) throws Exception {
+        return userService.getUserById(id);
+    }
+    @GetMapping("/")
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
+    }
+
+    @PutMapping("/{id}")
+    public User updateUser(@PathVariable Integer id, @RequestBody UserDTO userDTO) {
+        return userService.updateUser(id, userDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Integer id) {
+        userService.deleteUser(id);
+    }
+
+    @PutMapping("/follow/{userId1}/{userId2}")
+    public User followUserHandler(@PathVariable Integer userId1,@PathVariable Integer userId2) throws Exception {
+        User user = userService.followUser(userId1,userId2);
+        return user;
+    }
+
+
+    @PostMapping("/with-picture")
+public User createUserWithPicture(@RequestParam("profilePicture") MultipartFile profilePicture, @ModelAttribute UserDTO userDTO) {
+    try {
+        // Set profile picture data in userDTO
+        userDTO.setProfilePicture(profilePicture.getBytes());
+        return userService.createUser(userDTO);
+    } catch (IOException e) {
+        // Handle IOException
+        e.printStackTrace(); // You can log the error or handle it based on your application's requirements
+        return null; // Or handle the error and return an appropriate response
+    }
+}
+
+}
+
+
+package com.bakend.strengthHUB.service.Impl;
+
+import com.bakend.strengthHUB.dto.UserDTO;
+import com.bakend.strengthHUB.entity.User;
+import com.bakend.strengthHUB.repo.UserRepository;
+import com.bakend.strengthHUB.service.UserService;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+@Transactional
+public class UserServiceImpl implements UserService {
+
+    @Autowired
+    UserRepository userRepository;
+    @Override
+    public User createUser(UserDTO userDTO) {
+        User user = new User();
+        user.setFirstname(userDTO.getFirstname());
+        user.setLastname(userDTO.getLastname());
+        user.setAge(userDTO.getAge());
+        user.setWeight(userDTO.getWeight());
+        user.setHeight(userDTO.getHeight());        
+        user.setEmail(userDTO.getEmail());
+        user.setPhoneNo(userDTO.getPhoneNo());
+        user.setPassword(userDTO.getPassword());
+        user.setProfilePicture(userDTO.getProfilePicture());
+        user.setFollowers(userDTO.getFollowers());
+        user.setFollowings(userDTO.getFollowings());
+
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User getUserById(Integer id) throws Exception {
+
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()){
+            return user.get();
+        }
+
+        throw new Exception("User not exist with userid "+id);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public User updateUser(Integer id, UserDTO userDTO) {
+
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setFirstname(userDTO.getFirstname());
+            user.setLastname(userDTO.getLastname());
+            user.setAge(userDTO.getAge());
+            user.setWeight(userDTO.getWeight());
+            user.setHeight(userDTO.getHeight());
+            user.setEmail(userDTO.getEmail());
+            user.setPhoneNo(userDTO.getPhoneNo());
+            user.setPassword(userDTO.getPassword());
+            user.setFollowers(userDTO.getFollowers());
+            user.setFollowings(userDTO.getFollowings());
+            return userRepository.save(user);
+        }
+        return null;
+    }
+
+    @Override
+    public String deleteUser(Integer id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            userRepository.deleteById(id);
+            return "User deleted successfully";
+        } else {
+            return "User not found";
+        }
+    }
+
+    public User followUser(Integer userId1,Integer userId2) throws Exception {
+        User user1 = getUserById(userId1);
+        User user2 = getUserById(userId2);
+
+        user2.getFollowers().add(user1.getId());
+        user1.getFollowings().add(user2.getId());
+
+        userRepository.save(user1);
+        userRepository.save(user2);
+
+        return user1;
+
+    }
+}
+
+
+package com.bakend.strengthHUB.service;
+
+import com.bakend.strengthHUB.dto.UserDTO;
+import com.bakend.strengthHUB.entity.User;
+
+import java.util.List;
+
+public interface UserService {
+    User createUser(UserDTO user);
+    User getUserById(Integer id) throws Exception;
+
+    List<User> getAllUsers();
+
+    User updateUser(Integer id, UserDTO userDTO);
+
+    String deleteUser(Integer id);
+    User followUser(Integer userId1,Integer userId2) throws Exception;
+
+
+}
+
+
+
+implement a frontend code to this backend to upload a profile picture react js
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const handleSelectImage = async(event)=>{
+      setIsLoading(true)
+      const imageUrl= await uploadToCloudinary(event.target.files
+        [0],"image")
+        setSelectedImage(imageUrl);
+        setIsLoading(false)
+        formik.setFieldValue("image", imageUrl)
+    };
+
+
+    const Formik = useFormik({
+      initialValues: {
+        image: ""
+      },
+
+      onSubmit: (values)=>{
+        console.log("formik values ", values)
+      }
+    });
+
+
+
+
+
+
+<div className="flex space-x-5 items-center mt-5">
+          <div>
+            <input type="file" accept="image/*" onChange={handleSelectImage} style={{display: "none"}} id="image-input"/>
+            <label htmlFor="image-input">
+              <IconButton color="primary" component="span">
+                <Edit/>
+              </IconButton>
+            </label>
+            {selectedImage && <div>
+              <img className="h-[10rem]" src={selectedImage}
+              alt="" />
+            </div>}
+          </div>
+        </div>
+
+        <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.
+        drawer + 1 }}
+        open={isLoading}
+        onClick={handleClose}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
