@@ -1,24 +1,42 @@
-import React from "react";
-import { Box, Divider, Grid, Stack } from "@mui/material";
-import PrimarySearchAppBar from "../Components/PrimarySearchAppBar";
+import React, { useEffect } from "react";
+import { Grid } from "@mui/material";
 import SideBar from "../Components/SideBar";
 import Feed from "../Components/Feed";
 import RightSideBar from "../Components/RightSideBar";
+import { Route, Routes, useLocation } from "react-router-dom";
+import Meals from "../Components/Meals";
+import { useDispatch, useSelector } from "react-redux";
 
-function HomePage() {
+export default function HomePage() {
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const jwt = localStorage.getItem("jwt");
+  const {auth} = useSelector(store => store);
+
+  useEffect(() => {
+    // dispatch(getPostsAction());
+  }, []);
+
+  
   return (
-    <>
-      <Box>
-        <Stack direction="row" justifyContent="space-between">
-          <SideBar/>
-          <Divider orientation="vertical" variant="fullwidth" flexItem />
-          <Feed/>
-          <Divider orientation="vertical" variant="fullwidth" flexItem />
-          <RightSideBar/>
-        </Stack>
-      </Box>
-    </>
+    <Grid container spacing={2}>
+      <Grid item xs={2}>
+        <SideBar />
+      </Grid>
+      <Grid item xs={1}></Grid>
+      <Grid item xs={7} lg={6}>
+        {/* {location.pathname === "/home" && (
+          <Routes>
+            <Route path="/" element={<Feed />} />
+            <Route path="/meals" element={<Meals />} />
+          </Routes>
+        )} */}
+        <Feed/>
+      </Grid>
+
+      <Grid item xs={2}>
+        <RightSideBar />
+      </Grid>
+    </Grid>
   );
 }
-
-export default HomePage;
