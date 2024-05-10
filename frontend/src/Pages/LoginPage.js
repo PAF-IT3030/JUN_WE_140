@@ -20,21 +20,16 @@ import { loginUserAction } from '../Redux/Auth/auth.action';
 export default function LoginPage() {
     const [error, setError] = useState('');
 
+    const dispatch = useDispatch();
+
     const initialValues = {
         email: "",
         password: "",
     };
 
     const handleSubmit = async (values, { setSubmitting }) => {
-        try {
-            const response = await axios.post('http://localhost:8080/api/users/', values);
-            console.log("Login successful", response.data);
-            // Handle successful login, like storing token in local storage or dispatching an action
-        } catch (error) {
-            console.error("Login failed", error.response.data);
-            setError(error.response.data.message);
-        }
-        setSubmitting(false);
+       dispatch(loginUserAction({data: values}));
+       
     };
  
  
