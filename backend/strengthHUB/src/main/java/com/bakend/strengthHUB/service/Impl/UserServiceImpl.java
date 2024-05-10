@@ -1,6 +1,6 @@
 package com.bakend.strengthHUB.service.Impl;
 
-import com.bakend.strengthHUB.dto.UserDTO;
+import com.bakend.strengthHUB.Config.JwtProvider;
 import com.bakend.strengthHUB.entity.User;
 import com.bakend.strengthHUB.repo.UserRepository;
 import com.bakend.strengthHUB.service.UserService;
@@ -18,17 +18,18 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
     @Override
-    public User createUser(UserDTO userDTO) {
-        User user = new User();
-        user.setFirstname(userDTO.getFirstname());
-        user.setLastname(userDTO.getLastname());
-        user.setEmail(userDTO.getEmail());
-        user.setAge(userDTO.getAge());
-        user.setPassword(userDTO.getPassword());
-        user.setFollowers(userDTO.getFollowers());
-        user.setFollowings(userDTO.getFollowings());
+    public User createUser(User user) {
+        User newUser = new User();
+        newUser.setFirstname(user.getFirstname());
+        newUser.setLastname(user.getLastname());
+        newUser.setEmail(user.getEmail());
+        newUser.setAge(user.getAge());
+        newUser.setPassword(user.getPassword());
+        newUser.setFollowers(user.getFollowers());
+        newUser.setFollowings(user.getFollowings());
 
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        return savedUser;
     }
 
     @Override
@@ -48,21 +49,39 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(Integer id, UserDTO userDTO) {
+    public User updateUser( Integer id,User user) throws Exception {
 
         Optional<User> optionalUser = userRepository.findById(id);
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            user.setFirstname(userDTO.getFirstname());
-            user.setLastname(userDTO.getLastname());
-            user.setAge(userDTO.getAge());
-            user.setEmail(userDTO.getEmail());
-            user.setPassword(userDTO.getPassword());
-            user.setFollowers(userDTO.getFollowers());
-            user.setFollowings(userDTO.getFollowings());
-            return userRepository.save(user);
+        if(optionalUser.isEmpty()){
+            throw new Exception("user not exit with id"+id);
         }
-        return null;
+
+        User oldUser = optionalUser.get();
+
+        if(user.getFirstname()!=null){
+            oldUser.setFirstname(user.getFirstname());
+        }
+        if(user.getLastname()!=null){
+            oldUser.setLastname(user.getLastname());
+        }
+        if(user.getAge()!=null){
+            oldUser.setAge(user.getAge());
+        }
+        if(user.getEmail()!=null){
+            oldUser.setEmail(user.getEmail());
+        }
+//        if(user.getPassword()!=null){
+//            oldUser.setPassword(user.getPassword());
+//        }
+        User updatedUser = userRepository.save(user);
+
+        return updatedUser;
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        return user;
     }
 
     @Override
@@ -76,17 +95,26 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public User followUser(Integer userId1,Integer userId2) throws Exception {
-        User user1 = getUserById(userId1);
+    public User followUser(Integer reqUserId,Integer userId2) throws Exception {
+        User reqUser = getUserById(reqUserId);
         User user2 = getUserById(userId2);
 
-        user2.getFollowers().add(user1.getId());
-        user1.getFollowings().add(user2.getId());
+        user2.getFollowers().add(reqUser.getId());
+        reqUser.getFollowings().add(user2.getId());
 
-        userRepository.save(user1);
+        userRepository.save(reqUser);
         userRepository.save(user2);
 
-        return user1;
+        return reqUser;
 
+    }
+
+    @Override
+    public User findUserByJwt(String jwt) {
+        String email = JwtProvider.getEmailFromJwtToken(jwt);
+
+        User user = userRepository.findByEmail(email);
+
+        return user;
     }
 }

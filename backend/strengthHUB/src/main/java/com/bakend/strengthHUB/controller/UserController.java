@@ -6,20 +6,17 @@ import com.bakend.strengthHUB.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin
 public class UserController {
 
     @Autowired
     UserService userService;
-
-    @PostMapping("/")
-    public User createUser(@RequestBody UserDTO userDTO) {
-        return userService.createUser(userDTO);
-    }
 
     @GetMapping("/{id}")
     public User getUserById(@PathVariable Integer id) throws Exception {
@@ -30,9 +27,12 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @PutMapping("/{id}")
-    public User updateUser(@PathVariable Integer id, @RequestBody UserDTO userDTO) {
-        return userService.updateUser(id, userDTO);
+    @PutMapping("/")
+    public User updateUser(@RequestHeader("Authorization")String jwt,@RequestBody User user) throws Exception {
+
+        User reqUser = userService.findUserByJwt(jwt);
+        User updatedUser = userService.updateUser(reqUser.getId(), user);
+        return updatedUser;
     }
 
     @DeleteMapping("/{id}")
@@ -40,9 +40,19 @@ public class UserController {
         userService.deleteUser(id);
     }
 
-    @PutMapping("/follow/{userId1}/{userId2}")
-    public User followUserHandler(@PathVariable Integer userId1,@PathVariable Integer userId2) throws Exception {
-        User user = userService.followUser(userId1,userId2);
+    @PutMapping("/follow/{userId2}")
+    public User followUserHandler(@RequestHeader("Authorization")String jwt,@PathVariable Integer userId2) throws Exception {
+
+        User reqUser = userService.findUserByJwt(jwt);
+        User user = userService.followUser(reqUser.getId(),userId2);
         return user;
     }
+    @GetMapping("/profile")
+    public User getUserByToken(@RequestHeader("Authorization")String jwt){
+
+        User user = userService.findUserByJwt(jwt);
+        user.setPassword(null);
+        return user;
+    }
+
 }
