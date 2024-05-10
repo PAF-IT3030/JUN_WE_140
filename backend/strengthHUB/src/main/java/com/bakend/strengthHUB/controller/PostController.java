@@ -3,7 +3,9 @@ package com.bakend.strengthHUB.controller;
 
 import com.bakend.strengthHUB.dto.PostDTO;
 import com.bakend.strengthHUB.entity.Post;
+import com.bakend.strengthHUB.entity.User;
 import com.bakend.strengthHUB.service.PostService;
+import com.bakend.strengthHUB.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,18 +22,24 @@ public class PostController {
     @Autowired
     PostService postService;
 
-    @PostMapping("/user/{userId}")
-    public ResponseEntity<Post> createPost(@RequestBody Post post,@PathVariable Integer userId)throws Exception {
+    @Autowired
+    UserService userService;
 
-            Post newPost = postService.createNewPost(post,userId);
-            return new ResponseEntity<>(newPost, HttpStatus.CREATED);
+    @PostMapping("/")
+    public ResponseEntity<Post> createPost(@RequestHeader("Authorization") String jwt, @RequestBody Post post) throws Exception {
+
+        User reqUser = userService.findUserByJwt(jwt);
+
+        Post newPost = postService.createNewPost(post, reqUser.getId());
+        return new ResponseEntity<>(newPost, HttpStatus.CREATED);
 
     }
 
-    @DeleteMapping("/{postId}/{userId}")
-    public ResponseEntity<String> deletePost(@PathVariable Integer postId, @PathVariable Integer userId) throws Exception {
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<String> deletePost(@RequestHeader("Authorization")String jwt,@PathVariable Integer postId) throws Exception {
         try {
-            postService.deletePost(postId, userId);
+            User reqUser = userService.findUserByJwt(jwt);
+            postService.deletePost(postId, reqUser.getId());
             return ResponseEntity.ok("Post deleted successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete post: " + e.getMessage());
@@ -39,12 +47,13 @@ public class PostController {
     }
 
     @GetMapping("/{postId}")
-    public ResponseEntity<Post> findPostById(@PathVariable Integer postId) throws Exception{
+    public ResponseEntity<Post> findPostById(@PathVariable Integer postId) throws Exception {
 
         Post post = postService.findPostById(postId);
 
-        return new ResponseEntity<Post>(post,HttpStatus.ACCEPTED);
+        return new ResponseEntity<Post>(post, HttpStatus.ACCEPTED);
     }
+
     @GetMapping("/")
     public ResponseEntity<List<Post>> findAllPosts() {
         List<Post> posts = postService.findAllPosts();
@@ -52,25 +61,30 @@ public class PostController {
     }
 
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Post>> findUsersPost(@PathVariable Integer userId){
+    @GetMapping("/user")
+    public ResponseEntity<List<Post>> findUsersPost(@RequestHeader("Authorization")String jwt) {
 
-        List<Post> posts = postService.findPostByUserId(userId);
-        return new ResponseEntity<List<Post>>(posts,HttpStatus.ACCEPTED);
+        User reqUser = userService.findUserByJwt(jwt);
+        List<Post> posts = postService.findPostByUserId(reqUser.getId());
+        return new ResponseEntity<List<Post>>(posts, HttpStatus.ACCEPTED);
     }
 
-    @PutMapping("/like/{postId}/user/{userId}")
-    public ResponseEntity<Post> findPostById(@PathVariable Integer postId,@PathVariable Integer userId) throws Exception{
+    @PutMapping("/like/{postId}")
+    public ResponseEntity<Post> findPostById(@RequestHeader("Authorization")String jwt,@PathVariable Integer postId) throws Exception {
 
-        Post post = postService.likePost(postId,userId);
+        User reqUser = userService.findUserByJwt(jwt);
+        Post post = postService.likePost(postId, reqUser.getId());
 
-        return new ResponseEntity<Post>(post,HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(post, HttpStatus.ACCEPTED);
     }
-    @PutMapping("/{postId}/{userId}")
-    public ResponseEntity<String> updatePost(@PathVariable Integer postId, @PathVariable Integer userId, @RequestBody PostDTO updatedPostDTO) {
+
+    @PutMapping("/{postId}")
+    public ResponseEntity<String> updatePost(@RequestHeader("Authorization")String jwt,@PathVariable Integer postId, @RequestBody PostDTO updatedPostDTO) {
         try {
-            // Call the service layer method to update the post
-            Post updatedPost = postService.updatePostByUserId(postId, userId, updatedPostDTO);
+
+            User reqUser = userService.findUserByJwt(jwt);
+
+            Post updatedPost = postService.updatePostByUserId(postId, reqUser.getId(), updatedPostDTO);
 
             // Return a success message
             return ResponseEntity.ok("Post updated successfully");

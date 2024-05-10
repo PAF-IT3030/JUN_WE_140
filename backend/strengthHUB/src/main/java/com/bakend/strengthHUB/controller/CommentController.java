@@ -3,7 +3,9 @@ package com.bakend.strengthHUB.controller;
 import com.bakend.strengthHUB.dto.CommentDTO;
 import com.bakend.strengthHUB.entity.Comment;
 import com.bakend.strengthHUB.entity.Post;
+import com.bakend.strengthHUB.entity.User;
 import com.bakend.strengthHUB.service.CommentService;
+import com.bakend.strengthHUB.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,53 +23,19 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @PostMapping("/")
-    public ResponseEntity<Object> addComment(@RequestBody CommentDTO commentDTO) {
-        Comment comment = commentService.addComment(commentDTO);
-        if (comment != null) {
-            return new ResponseEntity<>(comment, HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>("Failed to add comment", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+    @Autowired
+    UserService userService;
 
-    @GetMapping("/")
-    public ResponseEntity<List<CommentDTO>> getAllComments() {
-        List<CommentDTO> commentDTOs = commentService.getAllComments().stream()
-                .map(comment -> new CommentDTO(comment.getUserId(), comment.getCommentId(), comment.getComment()))
-                .collect(Collectors.toList());
-        return new ResponseEntity<>(commentDTOs, HttpStatus.OK);
-    }
+    @PostMapping("/post/{postId}")
+    public Comment createComment(@RequestBody Comment comment,
+                                 @RequestHeader("Authorization") String jwt,
+                                 @PathVariable("postId") Integer postId) throws Exception {
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getCommentById(@PathVariable("id") Long id) {
-        Comment comment = commentService.getCommentById(id);
-        if (comment != null) {
-            CommentDTO commentDTO = new CommentDTO(comment.getUserId(), comment.getCommentId(), comment.getComment());
-            return new ResponseEntity<>(commentDTO, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Comment not found", HttpStatus.NOT_FOUND);
-        }
-    }
+        User user = userService.findUserByJwt(jwt);
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateComment(@PathVariable("id") Long id, @RequestBody CommentDTO commentDTO) {
-        Comment updatedComment = commentService.updateComment(id, commentDTO.getComment());
-        if (updatedComment != null) {
-            CommentDTO updatedCommentDTO = new CommentDTO(updatedComment.getUserId(), updatedComment.getCommentId(), updatedComment.getComment());
-            return new ResponseEntity<>(updatedCommentDTO, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Comment not found", HttpStatus.NOT_FOUND);
-        }
-    }
+        Comment newComment = commentService.createComment(comment, postId, user.getId());
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteComment(@PathVariable("id") Long id) {
-        if (commentService.deleteComment(id)) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return newComment;
     }
 
 
