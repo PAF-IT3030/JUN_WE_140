@@ -1,4 +1,3 @@
-import { ADD_COMMMENT_SUCCESS } from "./post.actionType";
 
 const initialState = {
   posts: [],
@@ -6,6 +5,8 @@ const initialState = {
   loading: false,
   error: null,
   like: null,
+  comments:[],
+  newComment:null
 };
 
 export const postReducer = (state = initialState, action) => {
@@ -43,12 +44,14 @@ export const postReducer = (state = initialState, action) => {
         error: null,
       };
 
-    case ADD_COMMMENT_SUCCESS:
+    case "ADD_COMMMENT_SUCCESS":
       return {
         ...state,
+        newComment:action.payload,
         comments: [action.payload, ...state.commments],
         loading: false,
         error: null,
+        
       };
 
     case "CREATE_POST_FAILURE":

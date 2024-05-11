@@ -17,12 +17,12 @@ function Feed() {
   const [loading, setLoading] = useState(true);
   const dispatch= useDispatch();
   const { post } = useSelector((state) => state);
-  
+ 
   useEffect(() => {
     //retrive posts
     dispatch(getAllPostAction());
     
-  }, []);
+  }, [dispatch, post.newComment]);
 
   setTimeout(() => {
     setLoading(false);

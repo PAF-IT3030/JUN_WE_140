@@ -102,7 +102,7 @@ const Post = (item) => {
       setComments((prevComments) =>
         prevComments.filter((comment) => comment.commentId !== commentId)
       );
-      console.log("Comment deleted:", commentId);
+      
     } catch (error) {
       setError("Failed to delete comment");
       console.error("Error deleting comment:", error);
@@ -118,7 +118,7 @@ const Post = (item) => {
     dispatch(createCommentAction(reqData));
   };
 
-  console.log(item?.item?.user?.firstname.charAt(0), "cheack comment");
+
   return (
     <Card key={item?.item?.id} sx={{ margin: 5 }}>
       <CardHeader
