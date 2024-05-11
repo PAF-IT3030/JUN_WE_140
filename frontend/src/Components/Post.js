@@ -67,16 +67,7 @@ const Post = (item, buttons) => {
 
   //delete comment
   const handleDeleteComment = async (commentId) => {
-    try {
-      await axios.delete(`http://localhost:8080/api/comments/${commentId}`);
-      // Update the state to reflect the deletion
-      setComments((prevComments) =>
-        prevComments.filter((comment) => comment.commentId !== commentId)
-      );
-    } catch (error) {
-      setError("Failed to delete comment");
-      console.error("Error deleting comment:", error);
-    }
+   
   };
   const handleAddComment = () => {
     const reqData = {
@@ -183,27 +174,30 @@ const Post = (item, buttons) => {
                   variant="subtitle2"
                   sx={{ fontWeight: "bold", marginBottom: 1 }}
                 >
-                  {/* {comment.userId} */}
+                  {comment.user?.firstname}
                 </Typography>
                 <Typography sx={{ marginBottom: 1 }}>
                   {comment?.comment}
                 </Typography>
                 {/* <Typography variant="caption">{d.createdAt}</Typography> */}
               </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  marginLeft: "auto",
-                }}
-              >
-                <IconButton onClick={() => handleOpenDialog(comment)}>
-                  <EditIcon />
-                </IconButton>
-                <IconButton onClick={() => handleDeleteComment(comment)}>
-                  <DeleteIcon />
-                </IconButton>
-              </Box>
+              {/* If the comment was created by the logged in user, show the edit and delete buttons */
+              comment.user.id === auth.user.id && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    marginLeft: "auto",
+                  }}
+                >
+                  <IconButton onClick={() => handleOpenDialog(comment)}>
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton onClick={() => handleDeleteComment(comment.id)}>
+                    <DeleteIcon />
+                  </IconButton>
+                </Box>
+              )}
             </Box>
           ))}
         </AccordionDetails>

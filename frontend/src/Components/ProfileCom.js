@@ -33,6 +33,9 @@ function ProfileCom() {
     { value: "meal plan", name: "Meal Plan" },
   ];
 
+  const filteredPosts = post.posts = post.posts.filter((post) => post.user.id === auth.user.id);
+
+  console.log(filteredPosts,"filteredPosts");
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -163,11 +166,10 @@ function ProfileCom() {
           <div>
             {value === "posts" ? (
               <div className="space-y-5 w-[70%] my-10">
-                {/* {posts.map((post) => <div className="border border-slate-500 rounded-md">
-                  <Post />
+                {filteredPosts.map((post) => <div className="border border-slate-500 rounded-md">
+                  <Post item={post} button={true}/>
                 </div>
-                )} */}
-                posts
+                )}
               </div>
             ) : value === "workouts" ? (
               <div className="flex gap-2">workouts</div>
