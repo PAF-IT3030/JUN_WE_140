@@ -8,6 +8,7 @@ import {
 import React, { useEffect, useState } from "react";
 import Post from "./Post";
 import PostDialogForm from "./PostDialogForm";
+import Stories from "./Stories"
 import { AddBox } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllPostAction } from "../Redux/Post/post.action";
@@ -40,6 +41,9 @@ function Feed() {
 
   return (
     <Box flex={4} p={{ xs: 0, md: 2 }}>
+      <Box>
+        <Stories/>
+      </Box>
       <Box>
         <TextField
           onClick={handleOpenDialog}

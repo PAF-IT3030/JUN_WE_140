@@ -1,9 +1,9 @@
 import "./App.css";
-import HomePage from "./Pages/HomePage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProfilePage from "./Pages/ProfilePage";
 import LoginPage from "./Pages/LoginPage";
 import RegistrationPage from "./Pages/RegistrationPage";
+import HomePage from "./Pages/HomePage";
 import { Box } from "@mui/material";
 import Navbar from "./Components/NavBar";
 import { store } from "./Redux/store";
