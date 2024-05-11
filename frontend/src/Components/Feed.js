@@ -5,13 +5,15 @@ import {
   IconButton,
   TextField,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Post from "./Post";
 import PostDialogForm from "./PostDialogForm";
 import { AddBox } from "@mui/icons-material";
 
+
 function Feed() {
   const [loading, setLoading] = useState(true);
+  
 
   setTimeout(() => {
     setLoading(false);

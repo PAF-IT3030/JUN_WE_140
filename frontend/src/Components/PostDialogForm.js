@@ -16,6 +16,8 @@ import { Send, ImageOutlined } from "@mui/icons-material";
 import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
 import { uploadToCloudinary } from "../Utils/uploadToCloudinary";
+import { useDispatch } from "react-redux";
+import { createPostAction } from "../Redux/Post/post.action";
 
 function PostDialogForm({ open, handleClose }) {
  
@@ -23,6 +25,7 @@ function PostDialogForm({ open, handleClose }) {
   const [selectedImage, setSelectedImage] = useState();
   const [selectedVideo, setSelectedVideo] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
 
 
   const handleImageUpload = async(event) => {
@@ -48,6 +51,7 @@ function PostDialogForm({ open, handleClose }) {
     },
     onSubmit: (values) => {
       console.log("formik values", values);
+      dispatch(createPostAction(values));
     },
   });
 

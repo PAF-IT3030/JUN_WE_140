@@ -28,6 +28,8 @@ import axios from "axios";
 import { format } from "date-fns";
 import RateReviewIcon from "@mui/icons-material/RateReview";
 import AddCommentIcon from "@mui/icons-material/AddComment";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllPostAction } from "../Redux/Post/post.action";
 
 const Post = () => {
   const initialPost = {
@@ -50,14 +52,16 @@ const Post = () => {
 
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedComment, setSelectedComment] = useState(null);
-  const [posts, setPosts] = useState(null);
+  // const [posts, setPosts] = useState(null);
   const [comments, setComments] = useState(null);
   const [error, setError] = useState(null);
   const [newComment, setNewComment] = useState("");
+  const dispatch = useDispatch();
+  const { post } = useSelector((state) => state);
   //call apis
   useEffect(() => {
     //retrive posts
-    
+    dispatch(getAllPostAction());
     
   }, []);
 
@@ -133,7 +137,7 @@ const Post = () => {
     }
   };
 
-  return posts?.map((d) => (
+  return post?.posts?.map((d) => (
     <Card key={d.postId} sx={{ margin: 5 }}>
       <CardHeader
         avatar={
@@ -155,7 +159,7 @@ const Post = () => {
       <CardMedia
         component="img"
         height="20%"
-        image={`data:image/jpeg;base64,${d.filePath}`}
+        image={d.image}
         alt="Paella dish"
       />
       <CardContent>
