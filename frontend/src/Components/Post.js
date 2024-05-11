@@ -27,8 +27,9 @@ import axios from "axios";
 import { format } from "date-fns";
 
 import AddCommentIcon from "@mui/icons-material/AddComment";
-import { useDispatch } from "react-redux";
-import { createCommentAction } from "../Redux/Post/post.action";
+import { useDispatch, useSelector } from "react-redux";
+import { createCommentAction, likePostAction } from "../Redux/Post/post.action";
+import { isLikedByReqUser } from "../Utils/isLikedByReqUser";
 
 const Post = (item) => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -38,6 +39,7 @@ const Post = (item) => {
   const [error, setError] = useState(null);
   const [newComment, setNewComment] = useState("");
   const dispatch = useDispatch();
+  const {auth} = useSelector(store=>store)
 
   const handleOpenDialog = async (comment) => {
     if (comment) {
@@ -54,45 +56,14 @@ const Post = (item) => {
 
   const handleCloseDialog = async () => {
     setOpenDialog(false);
-
-    // try {
-    //   if (selectedComment && selectedComment.commentId) {
-    //     // If selectedComment is not null, it means we are updating an existing comment
-    //     const response = await axios.put(
-    //       `http://localhost:8080/api/comments/${selectedComment.commentId}`,
-    //       {
-    //         comment: newComment,
-    //       },
-    //       {
-    //         headers: {
-    //           "Content-Type": "application/json",
-    //         },
-    //       }
-    //     );
-    //     console.log("Comment updated:", response.data);
-    //   } else {
-    //     // If selectedComment is null, it means we are adding a new comment
-    //     const response = await axios.post(
-    //       "http://localhost:8080/api/comments/",
-    //       {
-    //         userId: "uid001",
-    //         comment: newComment,
-    //       },
-    //       {
-    //         headers: {
-    //           "Content-Type": "application/json",
-    //         },
-    //       }
-    //     );
-    //     console.log("Comment added:", response.data);
-    //   }
-    //   // Optionally, you can reset the form or show a success message here
-    // } catch (error) {
-    //   setError("Failed to add/update comment");
-    //   console.error("Error adding/updating comment:", error);
-    // }
     handleAddComment();
   };
+
+  //like post action
+  const handleLikePost=()=>{
+    console.log(item?.item?.id)
+    dispatch(likePostAction(item?.item?.id))
+  }
 
   //delete comment
   const handleDeleteComment = async (commentId) => {
@@ -118,6 +89,7 @@ const Post = (item) => {
     dispatch(createCommentAction(reqData));
   };
 
+  console.log(item?.item.liked,"liked")
 
   return (
     <Card key={item?.item?.id} sx={{ margin: 5 }}>
@@ -153,11 +125,16 @@ const Post = (item) => {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <Checkbox
+        <IconButton onClick={handleLikePost} aria-label="add to favorites">
+         {isLikedByReqUser(auth.user.id,item?.item) ?  <Checkbox
             icon={<FavoriteBorder />}
             checkedIcon={<Favorite sx={{ color: "red" }} />}
+          />:
+          <Checkbox
+            icon={<FavoriteBorder />}
+            checkedIcon={<Favorite sx={{ color: "white" }} />}
           />
+         }
         </IconButton>
         <IconButton aria-label="share">
           <Share />

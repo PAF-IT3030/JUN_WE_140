@@ -20,7 +20,7 @@ export const postReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        posts: [action.payload, ...state.post],
+        posts: [action.payload, ...state.posts],
         error: null,
       };
 
