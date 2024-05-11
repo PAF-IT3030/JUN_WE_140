@@ -17,7 +17,7 @@ export default function HomePage() {
   console.log(auth , "auth");
   useEffect(() => {
      dispatch(getUserAction(jwt));
-  }, []);
+  }, [jwt]);
 
   
   return (

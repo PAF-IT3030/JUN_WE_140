@@ -31,7 +31,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createCommentAction, likePostAction } from "../Redux/Post/post.action";
 import { isLikedByReqUser } from "../Utils/isLikedByReqUser";
 
-const Post = (item) => {
+const Post = (item, buttons) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedComment, setSelectedComment] = useState(null);
 
@@ -39,7 +39,7 @@ const Post = (item) => {
   const [error, setError] = useState(null);
   const [newComment, setNewComment] = useState("");
   const dispatch = useDispatch();
-  const {auth} = useSelector(store=>store)
+  const { auth } = useSelector((store) => store);
 
   const handleOpenDialog = async (comment) => {
     if (comment) {
@@ -60,10 +60,10 @@ const Post = (item) => {
   };
 
   //like post action
-  const handleLikePost=()=>{
-    console.log(item?.item?.id)
-    dispatch(likePostAction(item?.item?.id))
-  }
+  const handleLikePost = () => {
+    console.log(item?.item?.id);
+    dispatch(likePostAction(item?.item?.id));
+  };
 
   //delete comment
   const handleDeleteComment = async (commentId) => {
@@ -73,7 +73,6 @@ const Post = (item) => {
       setComments((prevComments) =>
         prevComments.filter((comment) => comment.commentId !== commentId)
       );
-      
     } catch (error) {
       setError("Failed to delete comment");
       console.error("Error deleting comment:", error);
@@ -88,8 +87,6 @@ const Post = (item) => {
     };
     dispatch(createCommentAction(reqData));
   };
-
-  console.log(item?.item.liked,"liked")
 
   return (
     <Card key={item?.item?.id} sx={{ margin: 5 }}>
@@ -113,12 +110,23 @@ const Post = (item) => {
       <Typography variant="h6" fontFamily="Paella dish" sx={{ p: 2 }}>
         {item?.item?.title}
       </Typography>
-      <CardMedia
-        component="img"
-        height="20%"
-        image={item?.item?.image}
-        alt="Paella dish"
+      {item?.item?.image === "" ? (
+        <CardMedia
+        component="video" 
+        height="500px" 
+        src={item?.item?.video} 
+        title="Video" 
+        controls 
       />
+      ) : (
+        <CardMedia
+          component="img"
+          height="20%"
+          image={item?.item?.image}
+          alt="Paella dish"
+        />
+      )}
+
       <CardContent>
         <Typography variant="body2" color="text.secondary">
           {item?.item?.description}
@@ -126,15 +134,17 @@ const Post = (item) => {
       </CardContent>
       <CardActions disableSpacing>
         <IconButton onClick={handleLikePost} aria-label="add to favorites">
-         {isLikedByReqUser(auth.user.id,item?.item) ?  <Checkbox
-            icon={<FavoriteBorder />}
-            checkedIcon={<Favorite sx={{ color: "red" }} />}
-          />:
-          <Checkbox
-            icon={<FavoriteBorder />}
-            checkedIcon={<Favorite sx={{ color: "white" }} />}
-          />
-         }
+          {isLikedByReqUser(auth.user.id, item?.item) ? (
+            <Checkbox
+              icon={<FavoriteBorder />}
+              checkedIcon={<Favorite sx={{ color: "red" }} />}
+            />
+          ) : (
+            <Checkbox
+              icon={<FavoriteBorder />}
+              checkedIcon={<Favorite sx={{ color: "red" }} />}
+            />
+          )}
         </IconButton>
         <IconButton aria-label="share">
           <Share />

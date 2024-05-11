@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -26,7 +27,9 @@ public class Post {
     @ManyToOne
     private User user;
 
-    private LocalDate createdAt;
+    @Temporal(TemporalType.TIMESTAMP) // Specify TemporalType.TIMESTAMP
+    @Column(name = "created_at", updatable = false) // Set updatable to false
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @ManyToMany
     private List<User> liked;

@@ -14,9 +14,8 @@ import { getUserAction } from "./Redux/Auth/auth.action";
 function App() {
   const { auth } = useSelector((store) => store);
   const jwt = localStorage.getItem("jwt");
+  console.log(jwt, "jwt")
   const dispatch = useDispatch();
-
-  console.log(auth.user, "auth");
 
   useEffect(() => {
     dispatch(getUserAction(jwt));
@@ -28,6 +27,7 @@ function App() {
         <Route path="/*" element={auth.user ? <HomePage /> : <LoginPage />} />
         <Route path="/register" element={<RegistrationPage />} />
         <Route path="/*" element={<LoginPage />} />
+        <Route path="/profile/:id" element={<ProfilePage user={auth.user}/>} />
       </Routes>
     </Box>
   );

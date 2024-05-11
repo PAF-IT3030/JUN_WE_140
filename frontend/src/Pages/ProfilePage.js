@@ -1,22 +1,20 @@
 import React from "react";
-import { Box, Divider, Stack } from "@mui/material";
+import { Grid } from "@mui/material";
 import SideBar from "../Components/SideBar";
-import RightSideBar from "../Components/RightSideBar";
+
 import ProfileCom from "../Components/ProfileCom";
 
-function Profile() {
+function Profile(user) {
   return (
-    <>
-      <Box>
-        <Stack direction="row" justifyContent="space-between">
-          <SideBar/>
-          <Divider orientation="vertical" variant="fullwidth" flexItem />
-          <ProfileCom/>
-          <Divider orientation="vertical" variant="fullwidth" flexItem />
-          <RightSideBar/>
-        </Stack>
-      </Box>
-    </>
+    <Grid container>
+      <Grid item xs={2}>
+        <SideBar />
+        {/* <Divider orientation="vertical" variant="fullwidth" flexItem /> */}
+      </Grid>
+      <Grid item xs={10}>
+        <ProfileCom user={user} />
+      </Grid>
+    </Grid>
   );
 }
 

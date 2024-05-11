@@ -14,28 +14,24 @@ import {
 } from "@mui/material";
 import { Send, ImageOutlined } from "@mui/icons-material";
 import EditIcon from "@mui/icons-material/Edit";
-import axios from "axios";
 import { uploadToCloudinary } from "../Utils/uploadToCloudinary";
 import { useDispatch } from "react-redux";
 import { createPostAction } from "../Redux/Post/post.action";
 
 function PostDialogForm({ open, handleClose }) {
- 
-
   const [selectedImage, setSelectedImage] = useState();
   const [selectedVideo, setSelectedVideo] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
-
-  const handleImageUpload = async(event) => {
+  const handleImageUpload = async (event) => {
     const imageUrl = await uploadToCloudinary(event.target.files[0], "image");
     setSelectedImage(imageUrl);
     setIsLoading(false);
     formik.setFieldValue("image", imageUrl);
   };
 
-  const handleVedioUpload = async(event) => {
+  const handleVedioUpload = async (event) => {
     const videoUrl = await uploadToCloudinary(event.target.files[0], "video");
     setSelectedVideo(videoUrl);
     setIsLoading(false);
@@ -56,18 +52,18 @@ function PostDialogForm({ open, handleClose }) {
   });
 
   return (
-    <Dialog 
-      open={open} 
-      onClose={handleClose}
-      fullWidth={true}
-      maxWidth="sm"
-    >
+    <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth="sm">
       <DialogTitle>
         Create a New Post <EditIcon />
       </DialogTitle>
       <DialogContent>
         <form onSubmit={formik.handleSubmit}>
-          <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            gap={2}
+          >
             <TextField
               margin="dense"
               label="Title"
@@ -88,21 +84,26 @@ function PostDialogForm({ open, handleClose }) {
               value={formik.values.description}
               onChange={formik.handleChange}
             />
-            <div>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-                style={{ display: "none" }}
-                id="image-input"
-                multiple
-              />
-              <label htmlFor="image-input">
-                <Button variant="contained" component="span">
-                  Upload Image <ImageOutlined />
-                </Button>
-              </label>
-            </div>
+            {selectedVideo ? (
+              ""
+            ) : (
+              <div>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  style={{ display: "none" }}
+                  id="image-input"
+                  multiple
+                />
+                <label htmlFor="image-input">
+                  <Button variant="contained" component="span">
+                    Upload Image <ImageOutlined />
+                  </Button>
+                </label>
+              </div>
+            )}
+
             {selectedImage && (
               <img
                 src={selectedImage}
@@ -110,21 +111,26 @@ function PostDialogForm({ open, handleClose }) {
                 style={{ maxWidth: "100%" }}
               />
             )}
-            <div>
-              <input
-                type="file"
-                accept="video/*"
-                onChange={handleVedioUpload}
-                style={{ display: "none" }}
-                id="video-input"
-                multiple
-              />
-              <label htmlFor="video-input">
-                <Button variant="contained" component="span">
-                  Upload Video <ImageOutlined />
-                </Button>
-              </label>
-            </div>
+            {selectedImage ? (
+              ""
+            ) : (
+              <div>
+                <input
+                  type="file"
+                  accept="video/*"
+                  onChange={handleVedioUpload}
+                  style={{ display: "none" }}
+                  id="video-input"
+                  multiple
+                />
+                <label htmlFor="video-input">
+                  <Button variant="contained" component="span">
+                    Upload Video <ImageOutlined />
+                  </Button>
+                </label>
+              </div>
+            )}
+
             {selectedVideo && (
               <video width="320" height="240" controls>
                 <source src={selectedVideo} type="video/mp4" />
@@ -139,7 +145,11 @@ function PostDialogForm({ open, handleClose }) {
           onClick={handleClose}
         >
           {selectedImage ? (
-            <img src={selectedImage} alt="Selected Image" style={{ maxWidth: "100%" }} />
+            <img
+              src={selectedImage}
+              alt="Selected Image"
+              style={{ maxWidth: "100%" }}
+            />
           ) : (
             <CircularProgress color="inherit" />
           )}
@@ -149,7 +159,11 @@ function PostDialogForm({ open, handleClose }) {
         <Button onClick={handleClose} color="primary">
           Cancel
         </Button>
-        <IconButton onClick={formik.handleSubmit} color="primary" aria-label="post">
+        <IconButton
+          onClick={formik.handleSubmit}
+          color="primary"
+          aria-label="post"
+        >
           <Send />
         </IconButton>
       </DialogActions>

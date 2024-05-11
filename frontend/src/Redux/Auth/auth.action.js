@@ -70,7 +70,7 @@ export const updateProfileAction = (registerData) => async (dispatch) => {
     console.log("update profile", data);
     dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: data.token });
   } catch (error) {
-    console.log("------", error);
+    console.log("update------", error);
     dispatch({ type: UPDATE_PROFILE_FAILURE, payload: error });
   }
 };
