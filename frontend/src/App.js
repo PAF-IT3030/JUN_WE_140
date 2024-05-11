@@ -7,24 +7,28 @@ import RegistrationPage from "./Pages/RegistrationPage";
 import { Box } from "@mui/material";
 import Navbar from "./Components/NavBar";
 import { store } from "./Redux/store";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { getUserAction } from "./Redux/Auth/auth.action";
 
 function App() {
-  const {auth} = useSelector(store => store);
+  const { auth } = useSelector((store) => store);
+  const jwt = localStorage.getItem("jwt");
+  const dispatch = useDispatch();
+
+  console.log(auth.user, "auth");
 
   useEffect(() => {
-    // dispatch(getProfileAction(jwt));
-  }, []);
+    dispatch(getUserAction(jwt));
+  }, [jwt]);
   return (
     <Box>
       <Navbar />
-        <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/register" element={<RegistrationPage />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/*" element={<LoginPage />} />
-        </Routes> 
+      <Routes>
+        <Route path="/*" element={auth.user ? <HomePage /> : <LoginPage />} />
+        <Route path="/register" element={<RegistrationPage />} />
+        <Route path="/*" element={<LoginPage />} />
+      </Routes>
     </Box>
   );
 }

@@ -6,7 +6,6 @@ import {GET_PROFILE_REQUEST, GET_PROFILE_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, 
         error:null,
         loading:false,
         user:null
-
     }
     
     export const authReducer=(state=initialState, action)=>{

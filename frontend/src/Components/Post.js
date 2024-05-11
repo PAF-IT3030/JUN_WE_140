@@ -57,24 +57,8 @@ const Post = () => {
   //call apis
   useEffect(() => {
     //retrive posts
-    axios
-      .get("http://localhost:8080/api/post/")
-      .then((response) => {
-        setPosts(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching posts:", error);
-      });
-
-    //retrive comments
-    axios
-      .get("http://localhost:8080/api/comments/")
-      .then((response) => {
-        setComments(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching posts:", error);
-      });
+    
+    
   }, []);
 
   //send data
