@@ -1,4 +1,7 @@
 import {
+  ADD_COMMMENT_FAILURE,
+  ADD_COMMMENT_REQUEST,
+  ADD_COMMMENT_SUCCESS,
   CREATE_POST_FAILURE,
   CREATE_POST_REQUEST,
   CREATE_POST_SUCCESS,
@@ -12,7 +15,7 @@ import {
   LIKE_POST_REQUEST,
   LIKE_POST_SUCCESS,
 } from "./post.actionType";
-import { API_BASE_URL, api } from "../../config/api";
+import {api } from "../../config/api";
 
 export const createPostAction = (postData) => async (dispatch) => {
   dispatch({
@@ -84,3 +87,22 @@ export const getUsersPostAction = (userId) => async (dispatch) => {
       dispatch({ type: LIKE_POST_FAILURE, payload: error });
     }
   };
+
+
+//comments
+export const createCommentAction = (reqData) => async (dispatch) => {
+  dispatch({
+    type: ADD_COMMMENT_REQUEST,
+  });
+  try {
+    const { data } = await api.post(`/api/comments/post/${reqData.postId}`, reqData.data);
+    dispatch({
+      type: ADD_COMMMENT_SUCCESS,
+      payload: data,
+    });
+
+    console.log("add comment", data);
+  } catch (error) {
+    dispatch({ type: ADD_COMMMENT_FAILURE, payload: error });
+  }
+};

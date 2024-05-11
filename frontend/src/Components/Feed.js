@@ -9,11 +9,20 @@ import React, { useEffect, useState } from "react";
 import Post from "./Post";
 import PostDialogForm from "./PostDialogForm";
 import { AddBox } from "@mui/icons-material";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllPostAction } from "../Redux/Post/post.action";
 
 
 function Feed() {
   const [loading, setLoading] = useState(true);
+  const dispatch= useDispatch();
+  const { post } = useSelector((state) => state);
   
+  useEffect(() => {
+    //retrive posts
+    dispatch(getAllPostAction());
+    
+  }, []);
 
   setTimeout(() => {
     setLoading(false);
@@ -58,7 +67,7 @@ function Feed() {
         </Stack>
       ) : (
         <>
-          <Post />
+        {post?.posts?.map((d)=><Post item={d}/>) }
         </>
       )}
     </Box>

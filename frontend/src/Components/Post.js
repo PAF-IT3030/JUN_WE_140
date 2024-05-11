@@ -1,6 +1,6 @@
 import { Favorite, FavoriteBorder, MoreVert, Share } from "@mui/icons-material";
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 import {
   Accordion,
   AccordionDetails,
@@ -22,53 +22,24 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import workoutImg from "../Images/workout.jpg";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { format } from "date-fns";
-import RateReviewIcon from "@mui/icons-material/RateReview";
+
 import AddCommentIcon from "@mui/icons-material/AddComment";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllPostAction } from "../Redux/Post/post.action";
+import { useDispatch } from "react-redux";
+import { createCommentAction } from "../Redux/Post/post.action";
 
-const Post = () => {
-  const initialPost = {
-    postId: 0,
-    userId: "",
-    name: "",
-    date: "",
-    description: "",
-    image: "",
-    Vedio: "",
-    comments: [
-      {
-        commentId: "",
-        username: "",
-        description: "",
-        time: "",
-      },
-    ],
-  };
-
+const Post = (item) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedComment, setSelectedComment] = useState(null);
-  // const [posts, setPosts] = useState(null);
+
   const [comments, setComments] = useState(null);
   const [error, setError] = useState(null);
   const [newComment, setNewComment] = useState("");
   const dispatch = useDispatch();
-  const { post } = useSelector((state) => state);
-  //call apis
-  useEffect(() => {
-    //retrive posts
-    dispatch(getAllPostAction());
-    
-  }, []);
-
-  //send data
 
   const handleOpenDialog = async (comment) => {
-    console.log(comment,"ceeeeeeeeeee")
     if (comment) {
       // If a comment is provided, it means we are updating an existing comment
       setSelectedComment(comment);
@@ -83,43 +54,44 @@ const Post = () => {
 
   const handleCloseDialog = async () => {
     setOpenDialog(false);
-  
-    try {
-      if (selectedComment && selectedComment.commentId) {
-        // If selectedComment is not null, it means we are updating an existing comment
-        const response = await axios.put(
-          `http://localhost:8080/api/comments/${selectedComment.commentId}`,
-          {
-            comment: newComment,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        console.log("Comment updated:", response.data);
-      } else {
-        // If selectedComment is null, it means we are adding a new comment
-        const response = await axios.post(
-          "http://localhost:8080/api/comments/",
-          {
-            userId: "uid001",
-            comment: newComment,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        console.log("Comment added:", response.data);
-      }
-      // Optionally, you can reset the form or show a success message here
-    } catch (error) {
-      setError("Failed to add/update comment");
-      console.error("Error adding/updating comment:", error);
-    }
+
+    // try {
+    //   if (selectedComment && selectedComment.commentId) {
+    //     // If selectedComment is not null, it means we are updating an existing comment
+    //     const response = await axios.put(
+    //       `http://localhost:8080/api/comments/${selectedComment.commentId}`,
+    //       {
+    //         comment: newComment,
+    //       },
+    //       {
+    //         headers: {
+    //           "Content-Type": "application/json",
+    //         },
+    //       }
+    //     );
+    //     console.log("Comment updated:", response.data);
+    //   } else {
+    //     // If selectedComment is null, it means we are adding a new comment
+    //     const response = await axios.post(
+    //       "http://localhost:8080/api/comments/",
+    //       {
+    //         userId: "uid001",
+    //         comment: newComment,
+    //       },
+    //       {
+    //         headers: {
+    //           "Content-Type": "application/json",
+    //         },
+    //       }
+    //     );
+    //     console.log("Comment added:", response.data);
+    //   }
+    //   // Optionally, you can reset the form or show a success message here
+    // } catch (error) {
+    //   setError("Failed to add/update comment");
+    //   console.error("Error adding/updating comment:", error);
+    // }
+    handleAddComment();
   };
 
   //delete comment
@@ -136,13 +108,23 @@ const Post = () => {
       console.error("Error deleting comment:", error);
     }
   };
+  const handleAddComment = () => {
+    const reqData = {
+      postId: item?.item?.id,
+      data: {
+        comment: newComment,
+      },
+    };
+    dispatch(createCommentAction(reqData));
+  };
 
-  return post?.posts?.map((d) => (
-    <Card key={d.postId} sx={{ margin: 5 }}>
+  console.log(item?.item?.user?.firstname.charAt(0), "cheack comment");
+  return (
+    <Card key={item?.item?.id} sx={{ margin: 5 }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
-            R
+            {item?.item?.user?.firstname.charAt(0)}
           </Avatar>
         }
         action={
@@ -151,20 +133,23 @@ const Post = () => {
           </IconButton>
         }
         // title={d.name}
-        subheader={format(new Date(d.createdAt), "MMMM dd, yyyy HH:mm")}
+        subheader={format(
+          new Date(item?.item?.createdAt),
+          "MMMM dd, yyyy HH:mm"
+        )}
       />
       <Typography variant="h6" fontFamily="Paella dish" sx={{ p: 2 }}>
-        {d.title}
+        {item?.item?.title}
       </Typography>
       <CardMedia
         component="img"
         height="20%"
-        image={d.image}
+        image={item?.item?.image}
         alt="Paella dish"
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          {d.description}
+          {item?.item?.description}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -192,9 +177,9 @@ const Post = () => {
           </Box>
         </AccordionSummary>
         <AccordionDetails sx={{ flexDirection: "column" }}>
-          {comments?.map((comment) => (
+          {item?.item?.comments?.map((comment) => (
             <Box
-              key={comment.commentId}
+              key={comment?.id}
               sx={{
                 marginBottom: 2,
                 display: "flex",
@@ -202,17 +187,19 @@ const Post = () => {
               }}
             >
               <Avatar sx={{ bgcolor: "#ff6f61", marginRight: 2 }}>
-                {/* {comment.username.charAt(0)} */}
+                <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
+                  {comment?.user?.firstname.charAt(0)}
+                </Avatar>
               </Avatar>
               <Box>
                 <Typography
                   variant="subtitle2"
                   sx={{ fontWeight: "bold", marginBottom: 1 }}
                 >
-                  {comment.userId}
+                  {/* {comment.userId} */}
                 </Typography>
                 <Typography sx={{ marginBottom: 1 }}>
-                  {comment.comment}
+                  {comment?.comment}
                 </Typography>
                 {/* <Typography variant="caption">{d.createdAt}</Typography> */}
               </Box>
@@ -226,7 +213,7 @@ const Post = () => {
                 <IconButton onClick={() => handleOpenDialog(comment)}>
                   <EditIcon />
                 </IconButton>
-                <IconButton onClick={() => handleDeleteComment(comment.commentId)}>
+                <IconButton onClick={() => handleDeleteComment(comment)}>
                   <DeleteIcon />
                 </IconButton>
               </Box>
@@ -235,7 +222,9 @@ const Post = () => {
         </AccordionDetails>
       </Accordion>
       <Dialog open={openDialog} onClose={handleCloseDialog}>
-        <DialogTitle>{selectedComment ? "Edit Comment" : "Add Comment"}</DialogTitle>
+        <DialogTitle>
+          {selectedComment ? "Edit Comment" : "Add Comment"}
+        </DialogTitle>
         <DialogContent>
           <TextField
             placeholder="Add comment"
@@ -255,7 +244,7 @@ const Post = () => {
         </DialogActions>
       </Dialog>
     </Card>
-  ));
+  );
 };
 
 export default Post;
