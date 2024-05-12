@@ -58,7 +58,6 @@ public class UserServiceImpl implements UserService {
 
         User oldUser = optionalUser.get();
 
-        oldUser.setId(user.getId());
         if(user.getFirstname()!=null){
             oldUser.setFirstname(user.getFirstname());
         }
@@ -71,10 +70,8 @@ public class UserServiceImpl implements UserService {
         if(user.getEmail()!=null){
             oldUser.setEmail(user.getEmail());
         }
-//        if(user.getPassword()!=null){
-//            oldUser.setPassword(user.getPassword());
-//        }
-        User updatedUser = userRepository.save(user);
+
+        User updatedUser = userRepository.save(oldUser);
 
         return updatedUser;
     }

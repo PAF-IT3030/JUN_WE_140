@@ -63,7 +63,7 @@ export const updateProfileAction = (registerData) => async (dispatch) => {
   try {
     const { data } = await api.put(
       `${API_BASE_URL}/api/users/`,
-      registerData.data
+      registerData
     );
 
     if (data.token) {
