@@ -1,0 +1,14 @@
+.signOutButton:hover {
+    cursor: pointer;
+}
+
+.navbarContainer {
+    padding: 0 !important;
+    background-color:rgb(155, 206, 197);
+}
+
+.navContainer {
+    display: flex !important; 
+    flex-direction: column !important;
+    width: 100%;
+}
