@@ -1,9 +1,12 @@
+
 const initialState = {
   posts: [],
   post: null,
   loading: false,
   error: null,
   like: null,
+  comments:[],
+  newComment:null
 };
 
 export const postReducer = (state = initialState, action) => {
@@ -17,7 +20,7 @@ export const postReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        posts: [action.payload, ...state.post],
+        posts: [action.payload, ...state.posts],
         error: null,
       };
 
@@ -26,6 +29,7 @@ export const postReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         posts: action.payload,
+        comments: action.payload.comments,
         error: null,
       };
 
@@ -38,6 +42,16 @@ export const postReducer = (state = initialState, action) => {
           post.id === action.payload.id ? action.payload : post
         ),
         error: null,
+      };
+
+    case "ADD_COMMMENT_SUCCESS":
+      return {
+        ...state,
+        newComment:action.payload,
+        comments: [action.payload, ...state.commments],
+        loading: false,
+        error: null,
+        
       };
 
     case "CREATE_POST_FAILURE":
