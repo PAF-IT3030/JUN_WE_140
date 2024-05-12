@@ -45,16 +45,16 @@ public class CommentController {
 
 
     @DeleteMapping("/{commentId}")
-    public String deleteUser(@PathVariable("commentId") Integer commentId) throws Exception {
+    public String deleteUser(@PathVariable("commentId") Integer commentId) {
 
-        Optional<Comment> comment = commentRepository.findById(commentId);
-
-        if (comment.isEmpty()) {
-            throw new Exception("user does not exit" + commentId);
+        Optional<Comment> optionalUser = commentRepository.findById(commentId);
+        if (optionalUser.isPresent()) {
+            Comment comment = optionalUser.get();
+            comment.setDeleted(true);
+            commentRepository.save(comment);
+            return "Comment  deleted";
         }
-
-        commentRepository.delete(comment.get());
-
-        return "user deleted ok " + commentId;
+        return "Comment not found";
     }
+
 }

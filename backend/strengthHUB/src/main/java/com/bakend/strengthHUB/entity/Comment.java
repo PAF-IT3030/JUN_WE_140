@@ -24,5 +24,7 @@ public class Comment {
     @ManyToOne
     private User user;
 
+    private boolean isDeleted;
+
 
 }

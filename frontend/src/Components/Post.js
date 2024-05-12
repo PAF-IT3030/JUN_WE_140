@@ -35,8 +35,7 @@ import {
 } from "../Redux/Post/post.action";
 import { isLikedByReqUser } from "../Utils/isLikedByReqUser";
 
-const Post = (item,count) => {
-
+const Post = (item, count) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedComment, setSelectedComment] = useState(null);
 
@@ -44,8 +43,6 @@ const Post = (item,count) => {
   const dispatch = useDispatch();
   const { auth } = useSelector((store) => store);
 
-
-  
   const handleOpenDialog = async (comment) => {
     if (comment) {
       // If a comment is provided, it means we are updating an existing comment
@@ -86,9 +83,12 @@ const Post = (item,count) => {
   //delete post
   const handlePostDelete = async () => {
     dispatch(deletePostAction(item?.item?.id));
-  }
+  };
 
-
+  console.log(
+    item?.item?.comments?.map((d) => d.deleted),
+    "comments"
+  );
 
   return (
     <Card key={item?.item?.id} sx={{ margin: 5 }}>
@@ -98,12 +98,15 @@ const Post = (item,count) => {
             {item?.item?.user?.firstname.charAt(0)}
           </Avatar>
         }
-        action={item.count&&
-          <>
-            <Button>Edit</Button>
-            <Button color="warning" onClick={handlePostDelete}>Delete</Button>
-          </>
-          
+        action={
+          item.count && (
+            <>
+              <Button>Edit</Button>
+              <Button color="warning" onClick={handlePostDelete}>
+                Delete
+              </Button>
+            </>
+          )
         }
         // title={d.name}
         subheader={
@@ -168,53 +171,57 @@ const Post = (item,count) => {
           </Box>
         </AccordionSummary>
         <AccordionDetails sx={{ flexDirection: "column" }}>
-          {item?.item?.comments?.map((comment) => (
-            <Box
-              key={comment?.id}
-              sx={{
-                marginBottom: 2,
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Avatar sx={{ bgcolor: "#ff6f61", marginRight: 2 }}>
-                <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
-                  {comment?.user?.firstname.charAt(0)}
+          {item?.item?.comments?.map((comment) =>
+            comment.deleted === true? "" : (
+              <Box
+                key={comment?.id}
+                sx={{
+                  marginBottom: 2,
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <Avatar sx={{ bgcolor: "#ff6f61", marginRight: 2 }}>
+                  <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
+                    {comment?.user?.firstname.charAt(0)}
+                  </Avatar>
                 </Avatar>
-              </Avatar>
-              <Box>
-                <Typography
-                  variant="subtitle2"
-                  sx={{ fontWeight: "bold", marginBottom: 1 }}
-                >
-                  {comment.user?.firstname}
-                </Typography>
-                <Typography sx={{ marginBottom: 1 }}>
-                  {comment?.comment}
-                </Typography>
-                {/* <Typography variant="caption">{d.createdAt}</Typography> */}
-              </Box>
-              {
-                /* If the comment was created by the logged in user, show the edit and delete buttons */
-                comment.user.id === auth.user.id && (
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      marginLeft: "auto",
-                    }}
+                <Box>
+                  <Typography
+                    variant="subtitle2"
+                    sx={{ fontWeight: "bold", marginBottom: 1 }}
                   >
-                    <IconButton onClick={() => handleOpenDialog(comment)}>
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton onClick={() => handleDeleteComment(comment.id)}>
-                      <DeleteIcon />
-                    </IconButton>
-                  </Box>
-                )
-              }
-            </Box>
-          ))}
+                    {comment.user?.firstname}
+                  </Typography>
+                  <Typography sx={{ marginBottom: 1 }}>
+                    {comment?.comment}
+                  </Typography>
+                  {/* <Typography variant="caption">{d.createdAt}</Typography> */}
+                </Box>
+                {
+                  /* If the comment was created by the logged in user, show the edit and delete buttons */
+                  comment.user.id === auth.user.id && (
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        marginLeft: "auto",
+                      }}
+                    >
+                      {/* <IconButton onClick={() => handleOpenDialog(comment)}>
+                        <EditIcon />
+                      </IconButton> */}
+                      <IconButton
+                        onClick={() => handleDeleteComment(comment.id)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </Box>
+                  )
+                }
+              </Box>
+            )
+          )}
         </AccordionDetails>
       </Accordion>
       <Dialog open={openDialog} onClose={handleCloseDialog}>
