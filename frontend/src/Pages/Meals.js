@@ -1,4 +1,4 @@
-import { Box, Divider, Stack } from "@mui/material";
+import { Box, Divider, Grid, Stack } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -26,15 +26,25 @@ const Meals = () => {
   };
 
   return (
-      <Box>
-          <Stack direction="row" justifyContent="space-between">
-              <SideBar />
-              <Divider orientation="vertical" variant="fullwidth" flexItem />
-              <div className="w-full relative">
+      <Grid container>
+          <Grid xs={2} item ><SideBar /></Grid>
+              
+          <Grid xs={8} item >
+            <div className="w-full relative">
                   <div className="absolute top-0 left-1/2 transform -translate-x-1/2 mt-8 text-center">
                       <Link to="/CreateMeal">
                           <button className="bg-[#ffb703] px-8 py-1 rounded-lg text-white">
                               Add New Meal
+                          </button>
+                      </Link>
+                      <Link to="/Createupdates">
+                          <button className="bg-[#ffb703] px-8 py-1 rounded-lg text-white">
+                              Edit Meal
+                          </button>
+                      </Link>
+                      <Link to="/Deletemeal/:id">
+                          <button className="bg-[#ffb703] px-8 py-1 rounded-lg text-white">
+                              Delete Meal
                           </button>
                       </Link>
                   </div>
@@ -100,10 +110,11 @@ const Meals = () => {
                       </div>
                   </div>
               </div>
-              <Divider orientation="vertical" variant="fullwidth" flexItem />
-              <RightSideBar />
-          </Stack>
-      </Box>
+              </Grid>
+              
+              <Grid xs={2} item ></Grid>
+         
+      </Grid>
   );
 };
 

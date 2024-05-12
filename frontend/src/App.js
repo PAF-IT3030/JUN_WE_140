@@ -22,15 +22,14 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/home" element={<HomePage />} />
-          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/Createmeal" element={<CreateMeal />} />
-          <Route path="/Createupdates" element={<CreateUpdate />} />
+          {/* <Route path="/Createupdates" element={<CreateUpdate />} /> */}
           <Route path="/Deletemeal/:id" element={<DeleteMeal />} />
-          <Route path="/Deleteupdate/:id" element={<DeleteUpdate />} />
-          <Route path="/Editmeal/:id" element={<EditMeal />} />
+          {/* <Route path="/Deleteupdate/:id" element={<DeleteUpdate />} /> */}
+          {/* <Route path="/Editmeal/:id" element={<EditMeal />} />
           <Route path="/Editupdate/:id" element={<EditUpdate />} />
           <Route path="/meals" element={<Meals />} />
-          <Route path="/updates" element={<Updates />} />
+          <Route path="/updates" element={<Updates />} /> */}
         </Routes>
       </BrowserRouter>
     </Box>
