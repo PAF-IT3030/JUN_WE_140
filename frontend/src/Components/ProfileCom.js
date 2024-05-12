@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import "../css/ProfileCom.css";
-
 import plusIconB from "../Images/plusIconB.png";
 import EditIcon from "@mui/icons-material/Edit";
 import { Box, IconButton, Tab, Tabs, Typography } from "@mui/material";
@@ -27,6 +26,9 @@ function ProfileCom() {
 
   const { auth, post } = useSelector((state) => state);
 
+
+  const count = true;
+  
   const tabs = [
     { value: "posts", name: "Posts" },
     { value: "workouts", name: "Workouts" },
@@ -37,7 +39,6 @@ function ProfileCom() {
     (post) => post.user.id === auth.user.id
   ));
 
-  console.log(filteredPosts, "filteredPosts");
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -48,15 +49,14 @@ function ProfileCom() {
 
   const handleBackgroundImageChange = (event) => {
     const file = event.target.files[0];
-    console.log(file);
     setBackgroundImage(event.target.files[0]);
   };
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleProfileDelete = () => {
-    dispatch(deleteUserAction(auth?.user?.id));
-    navigate("/register");
+    dispatch(deleteUserAction(auth?.user?.id))
+    navigate("/register")
 
   }
 
@@ -183,7 +183,7 @@ function ProfileCom() {
               <div className="space-y-5 w-[70%] my-10">
                 {filteredPosts.map((post) => (
                   <div className="border border-slate-500 rounded-md">
-                    <Post item={post} button={true} />
+                    <Post item={post} count={count}/>
                   </div>
                 ))}
               </div>

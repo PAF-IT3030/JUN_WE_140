@@ -1,28 +1,22 @@
-import {
-  Box,
-  Stack,
-  Skeleton,
-  IconButton,
-  TextField,
-} from "@mui/material";
+import { Box, Stack, Skeleton, IconButton, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Post from "./Post";
 import PostDialogForm from "./PostDialogForm";
-import Stories from "./Stories"
+import Stories from "./Stories";
 import { AddBox } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllPostAction } from "../Redux/Post/post.action";
 
-
 function Feed() {
   const [loading, setLoading] = useState(true);
-  const dispatch= useDispatch();
+  const dispatch = useDispatch();
   const { post } = useSelector((state) => state);
- 
+
+  const count =  false;
+  console.log(post.posts?.length, "feed post");
   useEffect(() => {
     //retrive posts
     dispatch(getAllPostAction());
-    
   }, [dispatch, post.newComment]);
 
   setTimeout(() => {
@@ -42,7 +36,7 @@ function Feed() {
   return (
     <Box flex={4} p={{ xs: 0, md: 2 }}>
       <Box>
-        <Stories/>
+        <Stories />
       </Box>
       <Box>
         <TextField
@@ -71,7 +65,9 @@ function Feed() {
         </Stack>
       ) : (
         <>
-        {post?.posts?.map((d)=><Post item={d}/>) }
+          {post?.posts?.map((d) => (
+            <Post item={d} count={count} />
+          ))}
         </>
       )}
     </Box>

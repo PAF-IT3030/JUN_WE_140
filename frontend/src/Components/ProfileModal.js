@@ -1,6 +1,4 @@
 // ProfileModal.js
-
-import React, { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -11,10 +9,7 @@ import {
   Box,
   Typography,
   Grid,
-  InputAdornment,
-  InputLabel,
-  FormControl,
-  OutlinedInput,
+
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";

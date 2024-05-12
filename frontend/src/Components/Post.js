@@ -1,4 +1,4 @@
-import { Favorite, FavoriteBorder, MoreVert, Share } from "@mui/icons-material";
+import { Favorite, FavoriteBorder, Share } from "@mui/icons-material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import {
@@ -23,24 +23,29 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import axios from "axios";
 import { format } from "date-fns";
 
 import AddCommentIcon from "@mui/icons-material/AddComment";
 import { useDispatch, useSelector } from "react-redux";
-import { createCommentAction, likePostAction } from "../Redux/Post/post.action";
+import {
+  createCommentAction,
+  deleteCommentAction,
+  deletePostAction,
+  likePostAction,
+} from "../Redux/Post/post.action";
 import { isLikedByReqUser } from "../Utils/isLikedByReqUser";
 
-const Post = (item, buttons) => {
+const Post = (item,count) => {
+
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedComment, setSelectedComment] = useState(null);
 
-  const [comments, setComments] = useState(null);
-  const [error, setError] = useState(null);
   const [newComment, setNewComment] = useState("");
   const dispatch = useDispatch();
   const { auth } = useSelector((store) => store);
 
+
+  
   const handleOpenDialog = async (comment) => {
     if (comment) {
       // If a comment is provided, it means we are updating an existing comment
@@ -61,13 +66,12 @@ const Post = (item, buttons) => {
 
   //like post action
   const handleLikePost = () => {
-    console.log(item?.item?.id);
     dispatch(likePostAction(item?.item?.id));
   };
 
   //delete comment
   const handleDeleteComment = async (commentId) => {
-   
+    dispatch(deleteCommentAction(commentId));
   };
   const handleAddComment = () => {
     const reqData = {
@@ -79,6 +83,13 @@ const Post = (item, buttons) => {
     dispatch(createCommentAction(reqData));
   };
 
+  //delete post
+  const handlePostDelete = async () => {
+    dispatch(deletePostAction(item?.item?.id));
+  }
+
+
+
   return (
     <Card key={item?.item?.id} sx={{ margin: 5 }}>
       <CardHeader
@@ -87,28 +98,30 @@ const Post = (item, buttons) => {
             {item?.item?.user?.firstname.charAt(0)}
           </Avatar>
         }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVert />
-          </IconButton>
+        action={item.count&&
+          <>
+            <Button>Edit</Button>
+            <Button color="warning" onClick={handlePostDelete}>Delete</Button>
+          </>
+          
         }
         // title={d.name}
-        subheader={format(
-          new Date(item?.item?.createdAt),
-          "MMMM dd, yyyy HH:mm"
-        )}
+        subheader={
+          "posted at: " +
+          format(new Date(item?.item?.createdAt), "MMMM dd, yyyy HH:mm")
+        }
       />
       <Typography variant="h6" fontFamily="Paella dish" sx={{ p: 2 }}>
         {item?.item?.title}
       </Typography>
       {item?.item?.image === "" ? (
         <CardMedia
-        component="video" 
-        height="500px" 
-        src={item?.item?.video} 
-        title="Video" 
-        controls 
-      />
+          component="video"
+          height="500px"
+          src={item?.item?.video}
+          title="Video"
+          controls
+        />
       ) : (
         <CardMedia
           component="img"
@@ -181,23 +194,25 @@ const Post = (item, buttons) => {
                 </Typography>
                 {/* <Typography variant="caption">{d.createdAt}</Typography> */}
               </Box>
-              {/* If the comment was created by the logged in user, show the edit and delete buttons */
-              comment.user.id === auth.user.id && (
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    marginLeft: "auto",
-                  }}
-                >
-                  <IconButton onClick={() => handleOpenDialog(comment)}>
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton onClick={() => handleDeleteComment(comment.id)}>
-                    <DeleteIcon />
-                  </IconButton>
-                </Box>
-              )}
+              {
+                /* If the comment was created by the logged in user, show the edit and delete buttons */
+                comment.user.id === auth.user.id && (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      marginLeft: "auto",
+                    }}
+                  >
+                    <IconButton onClick={() => handleOpenDialog(comment)}>
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton onClick={() => handleDeleteComment(comment.id)}>
+                      <DeleteIcon />
+                    </IconButton>
+                  </Box>
+                )
+              }
             </Box>
           ))}
         </AccordionDetails>

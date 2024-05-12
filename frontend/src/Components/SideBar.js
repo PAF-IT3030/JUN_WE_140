@@ -15,7 +15,6 @@ import { useSelector } from "react-redux";
 const Sidebar = () => {
   const { auth } = useSelector((store) => store);
 
-  console.log(auth, "profile auth");
   const navigate = useNavigate();
   const handleNavigate = () => {
     navigate(`/profile/${auth?.user?.id}`);

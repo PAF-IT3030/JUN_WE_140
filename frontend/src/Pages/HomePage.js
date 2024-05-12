@@ -3,18 +3,14 @@ import { Grid } from "@mui/material";
 import SideBar from "../Components/SideBar";
 import Feed from "../Components/Feed";
 import RightSideBar from "../Components/RightSideBar";
-import { Route, Routes, useLocation } from "react-router-dom";
-import Meals from "../Components/Meals";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getUserAction } from "../Redux/Auth/auth.action";
 
 export default function HomePage() {
   const dispatch = useDispatch();
-  const location = useLocation();
+  
   const jwt = localStorage.getItem("jwt");
-  const {auth} = useSelector(store => store);
 
-  console.log(auth , "auth");
   useEffect(() => {
      dispatch(getUserAction(jwt));
   }, [jwt]);

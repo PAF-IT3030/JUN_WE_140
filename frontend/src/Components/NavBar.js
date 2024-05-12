@@ -1,5 +1,4 @@
 import { Notifications, Pets } from "@mui/icons-material";
-import Profile from "../Pages/ProfilePage";
 
 import {
   AppBar,

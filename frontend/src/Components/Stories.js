@@ -7,7 +7,6 @@ import Storycard from './StoryCard';
 
 import StoryProfile8 from "../Images/StoryProfile8.png";
 import plusIconB from "../Images/plusIconB.png";
-import story8 from "../Images/story8.jpg";
 
 
 

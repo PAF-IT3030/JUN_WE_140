@@ -1,12 +1,11 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {  Routes, Route } from "react-router-dom";
 import ProfilePage from "./Pages/ProfilePage";
 import LoginPage from "./Pages/LoginPage";
 import RegistrationPage from "./Pages/RegistrationPage";
 import HomePage from "./Pages/HomePage";
 import { Box } from "@mui/material";
 import Navbar from "./Components/NavBar";
-import { store } from "./Redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getUserAction } from "./Redux/Auth/auth.action";
@@ -14,7 +13,6 @@ import { getUserAction } from "./Redux/Auth/auth.action";
 function App() {
   const { auth } = useSelector((store) => store);
   const jwt = localStorage.getItem("jwt");
-  console.log(jwt, "jwt")
   const dispatch = useDispatch();
 
   useEffect(() => {
