@@ -1,10 +1,9 @@
-import React, { useRef, useState, useEffect } from "react";
-import axios from "axios";
+import React, { useRef, useState } from "react";
 import "../css/ProfileCom.css";
 
 import plusIconB from "../Images/plusIconB.png";
 import EditIcon from "@mui/icons-material/Edit";
-import { Box, Tab, Tabs } from "@mui/material";
+import { Box, IconButton, Tab, Tabs, Typography } from "@mui/material";
 import ProfilePic from "./ProfilePic";
 import age from "../Images/Age2.png";
 import weight from "../Images/Weight.png";
@@ -13,19 +12,20 @@ import email from "../Images/email.png";
 import phone from "../Images/phone.png";
 import Post from "./Post";
 import ProfileModal from "./ProfileModal";
-
+import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllPostAction } from "../Redux/Post/post.action";
+import {  deleteUserAction } from "../Redux/Auth/auth.action";
+import { useNavigate } from "react-router-dom";
+
 
 function ProfileCom() {
-  
   const inputRef = useRef(null);
   const [BackgroundImage, setBackgroundImage] = useState("");
   const [openPopup, setOpenPopup] = useState(false); // State for managing modal visibility
   const [users, setUsers] = useState(null);
   const [value, setValue] = useState("posts");
 
-  const { auth,post } = useSelector((state) => state);
+  const { auth, post } = useSelector((state) => state);
 
   const tabs = [
     { value: "posts", name: "Posts" },
@@ -33,9 +33,11 @@ function ProfileCom() {
     { value: "meal plan", name: "Meal Plan" },
   ];
 
-  const filteredPosts = post.posts = post.posts.filter((post) => post.user.id === auth.user.id);
+  const filteredPosts = (post.posts = post.posts.filter(
+    (post) => post.user.id === auth.user.id
+  ));
 
-  console.log(filteredPosts,"filteredPosts");
+  console.log(filteredPosts, "filteredPosts");
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -49,6 +51,14 @@ function ProfileCom() {
     console.log(file);
     setBackgroundImage(event.target.files[0]);
   };
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleProfileDelete = () => {
+    dispatch(deleteUserAction(auth?.user?.id));
+    navigate("/register");
+
+  }
 
   return (
     <>
@@ -89,6 +99,14 @@ function ProfileCom() {
                   className="editIcon"
                   onClick={() => setOpenPopup(true)}
                 />
+                <Box sx={{display:"flex", flexDirection:"row"}}>
+                  <Typography sx={{ p: 3 }} fontSize={20}>
+                    Delete Profile
+                  </Typography>
+                  <IconButton onClick={handleProfileDelete}>
+                    <DeleteIcon />
+                  </IconButton>
+                </Box>
               </h1>
             </div>
             <div className="followCount">
@@ -109,9 +127,7 @@ function ProfileCom() {
                 <img src={age} className="age" alt="" />
                 <label htmlFor="firstName" className="label">
                   Age :{" "}
-                  <span className="span">
-                    {auth.user?.age?.toString()}
-                  </span>
+                  <span className="span">{auth.user?.age?.toString()}</span>
                 </label>
               </div>
               <div className="IPform-outline">
@@ -135,8 +151,7 @@ function ProfileCom() {
               <div className="IPform-outline">
                 <img src={email} className="email" alt="" />
                 <label htmlFor="firstName" className="label">
-                  Email :{" "}
-                  <span className="span">{auth.user?.email}</span>
+                  Email : <span className="span">{auth.user?.email}</span>
                 </label>
               </div>
               <div className="IPform-outline">
@@ -166,10 +181,11 @@ function ProfileCom() {
           <div>
             {value === "posts" ? (
               <div className="space-y-5 w-[70%] my-10">
-                {filteredPosts.map((post) => <div className="border border-slate-500 rounded-md">
-                  <Post item={post} button={true}/>
-                </div>
-                )}
+                {filteredPosts.map((post) => (
+                  <div className="border border-slate-500 rounded-md">
+                    <Post item={post} button={true} />
+                  </div>
+                ))}
               </div>
             ) : value === "workouts" ? (
               <div className="flex gap-2">workouts</div>

@@ -58,6 +58,7 @@ public class UserServiceImpl implements UserService {
 
         User oldUser = optionalUser.get();
 
+        oldUser.setId(user.getId());
         if(user.getFirstname()!=null){
             oldUser.setFirstname(user.getFirstname());
         }

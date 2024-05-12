@@ -14,6 +14,9 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
+import { logoutUserAction } from "../Redux/Auth/auth.action";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -46,6 +49,15 @@ const UserBox = styled(Box)(({ theme }) => ({
 }));
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Dispatch the logout action when MenuItem is clicked
+    dispatch(logoutUserAction());
+    navigate("/"); // Redirect to login page after logout
+  };
   return (
     <AppBar position="sticky" sx={{ backgroundColor: "green" }}>
       {" "}
@@ -90,9 +102,11 @@ const Navbar = () => {
           horizontal: "right",
         }}
       >
-        <MenuItem><a href="/Profile">Profile</a></MenuItem>
+        <MenuItem>
+          <a href="/Profile">Profile</a>
+        </MenuItem>
         <MenuItem>My account</MenuItem>
-        <MenuItem>Logout</MenuItem>
+        <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </AppBar>
   );

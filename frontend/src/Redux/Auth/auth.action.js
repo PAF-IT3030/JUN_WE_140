@@ -1,6 +1,9 @@
 import axios from "axios";
 import { API_BASE_URL, api } from "../../config/api";
 import {
+  DELETE_PROFILE_FAILURE,
+  DELETE_PROFILE_REQUEST,
+    DELETE_PROFILE_SUCCESS,
     GET_PROFILE_FAILURE,
   GET_PROFILE_REQUEST,
   GET_PROFILE_SUCCESS,
@@ -91,3 +94,23 @@ export const getUserAction = (jwt) => async (dispatch) => {
     dispatch({ type: GET_PROFILE_FAILURE, payload: error });
   }
 };
+
+export const deleteUserAction = (userId) => async (dispatch) => {
+  dispatch({ type: DELETE_PROFILE_REQUEST });
+  try {
+    const { data } = await api.delete(`${API_BASE_URL}/api/users/${userId}`);
+
+    console.log("delete profile success", data);
+    dispatch({ type: DELETE_PROFILE_SUCCESS, payload: data });
+    
+  } catch (error) {
+    console.log("profile------", error);
+    dispatch({ type: DELETE_PROFILE_FAILURE, payload: error });
+  }
+};
+
+export const logoutUserAction = () => async (dispatch) => {
+  localStorage.removeItem("jwt");
+  dispatch({ type: "LOGOUT" });
+}
+
